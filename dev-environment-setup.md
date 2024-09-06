@@ -1,9 +1,9 @@
 # Developer Environment Setup
 
 ### Table of Contents
-- [Creating a shared folder](https://github.com/andrewamidei/photon-team-io/edit/main/dev-environment-setup.md#creating-a-shared-folder)
-- [Installing CustomTkinter](https://github.com/andrewamidei/photon-team-io/edit/main/dev-environment-setup.md#install-tkinter)
-- [Run your Python Code](https://github.com/andrewamidei/photon-team-io/edit/main/dev-environment-setup.md#run-python-code)
+- [Creating a shared folder](https://github.com/andrewamidei/photon-team-io/blob/main/dev-environment-setup.md#creating-a-shared-folder)
+- [Installing CustomTkinter](https://github.com/andrewamidei/photon-team-io/blob/main/dev-environment-setup.md#install-tkinter)
+- [Run your Python Code](https://github.com/andrewamidei/photon-team-io/blob/main/dev-environment-setup.md#run-python-code)
 
 ---
 
