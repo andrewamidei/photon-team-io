@@ -2,7 +2,7 @@
 
 ### Table of Contents
 - [Creating a shared folder](https://github.com/andrewamidei/photon-team-io/edit/main/dev-environment-setup.md#creating-a-shared-folder)
-- [Installing Tkinter](https://github.com/andrewamidei/photon-team-io/edit/main/dev-environment-setup.md#install-tkinter)
+- [Installing CustomTkinter](https://github.com/andrewamidei/photon-team-io/edit/main/dev-environment-setup.md#install-tkinter)
 - [Run your Python Code](https://github.com/andrewamidei/photon-team-io/edit/main/dev-environment-setup.md#run-python-code)
 
 ---
@@ -35,12 +35,12 @@ That should be it!
 
 ---
 
-### Install Tkinter
+### Install CustomTkinter
 
 This is a python library witch you can use to display UI elements.
 
 ```
-sudo apt-get install python-tk -y
+pip install customtkinter
 ```
 ---
 
