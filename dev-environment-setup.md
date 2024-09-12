@@ -2,7 +2,7 @@
 
 ### Table of Contents
 - [Creating a shared folder](https://github.com/andrewamidei/photon-team-io/blob/main/dev-environment-setup.md#creating-a-shared-folder)
-- [Installing CustomTkinter](https://github.com/andrewamidei/photon-team-io/blob/main/dev-environment-setup.md#install-Dependencies)
+- [Installing Dependencies](https://github.com/andrewamidei/photon-team-io/blob/main/dev-environment-setup.md#install-Dependencies)
 - [Run your Python Code](https://github.com/andrewamidei/photon-team-io/blob/main/dev-environment-setup.md#run-python-code)
 
 ---
