@@ -9,26 +9,38 @@ from PIL import Image
 import time
 
 # --- Global Definitions ---
-WINDOW_WIDTH = 800
-WINDOW_HEIGHT = 800
-LOGO_WIDTH = 800
-LOGO_HEIGHT = 800
+WINDOW_WIDTH = 800	# In pixels
+WINDOW_HEIGHT = 800	# In pixels
 SPLASH_SCREEN_DURATION = 5	# In seconds
+SPLASH_SCREEN_LOCATION = "Images/logo.jpg"
 
 # --- Create Window ---
 app = customtkinter.CTk()	# creates customtkinter object called "app"
 app.geometry(str(WINDOW_WIDTH) + "x" + str(WINDOW_HEIGHT))	# sets pixel size of window to WINDOW_WIDTHxWINDOW_HEIGHT
 app.title("Photon Control Panel")	# sets titls of window to "Photon Control Panel"
 
+def create_image(window, image_location, image_width, image_height, image_x, image_y):
+	# Creates an image label object then displays image of size on window at location.
+	# Inputs: window - customtkinter window object to display image on
+	#		  image_location - file location of image to be displayed
+	#		  image_width - width in pixels of the image
+	#		  image_height - height in pixels of the image
+	#		  image_x - x coordinate (in pixels) where upper left corner of image will be displayed relative to (0,0). Positive is right
+	#		  image_y - y coordinate (in pixels) where upper left corner of image will be displayed relative to (0,0). Positive is down
+	# Outputs: label - CTkLabel object containing image and supporting info such as size and location
+
+	i = customtkinter.CTkImage(light_image = Image.open(image_location), size = (image_width, image_height))	# Creates CTkImage object called "i" containing image file at location and size tuple
+	label = customtkinter.CTkLabel(master = window, image = i, text = "")	# Creates a label object used to display the image in the given window
+	label.place(x = image_x, y = image_y)	# Moves the image to the x and y coordinates
+	return label
+
 # --- Display Splash Screen ---
-logo_image = customtkinter.CTkImage(dark_image = Image.open("Images/logo.jpg"), size = (LOGO_WIDTH, LOGO_HEIGHT))	# Creates CTkImage object called "logo_image" and adds the logo.jpg to it with size 800x800
-logo_image_label = customtkinter.CTkLabel(master = app, image = logo_image, text = '')	# Displays image "logo_image" onto window "app"
-logo_image_label.grid(column = 0, row = 0)	# Moves image to 0,0
+logo_image = create_image(app, SPLASH_SCREEN_LOCATION, WINDOW_WIDTH, WINDOW_HEIGHT, 0, 0)	# Create the splash screen
 
 app.update()	# Updates window
 
 time.sleep(SPLASH_SCREEN_DURATION)	# Program will sleep for given seconds to show splash screen
 
-logo_image_label.destroy()	# Removes the logo image label
+logo_image.destroy()	# Delete the splash screen
 
-app.mainloop()	# Updates and stops execution of code?
+app.mainloop()	# Updates and stops execution of code? IDK
