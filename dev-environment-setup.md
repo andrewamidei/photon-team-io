@@ -47,7 +47,15 @@ This is a python library witch you can use to display UI elements.
 pip install customtkinter
 ```
 
----
+Customtkinter uses Pillow as a dependancy.
+```
+pip install pillow
+```
+
+Customtkinter also requires tkinter to function. The python built into Debian does not come with it, so use the below command to install it on python3.
+```
+sudo apt-get install python3-tk
+```
 
 ### Run Python Code
 
