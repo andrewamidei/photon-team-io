@@ -7,6 +7,7 @@
 import customtkinter
 from PIL import Image
 import time
+import psycopg2
 
 # --- Global Definitions ---
 WINDOW_WIDTH = 800
@@ -32,3 +33,35 @@ time.sleep(SPLASH_SCREEN_DURATION)	# Program will sleep for given seconds to sho
 logo_image_label.destroy()	# Removes the logo image label
 
 app.mainloop()	# Updates and stops execution of code?
+
+
+# --- Database Configuration ---
+# Connects Python to Postgre database
+connection = psycopg2.connect(
+	dbname="photon",
+	user="student",
+	password="student",
+	host="localhost",
+	port="5432"
+)
+
+# Create a cursor to execute SQL queries
+cursor = connection.cursor()
+
+# TEMPORARY add Test player each run.
+# Uncomment below line to watch as player gets inserted into Database
+# cursor.execute("INSERT INTO player values('2', 'EvanTest');")
+
+# Query the player table to retrieve data
+# Uncomment below line to retrieve all players from player table
+# cursor.execute("SELECT * FROM player;")
+
+# Fetch and print the result
+# Following lines print out all players from player table. Above execute line must be uncommented to work.
+# players = cursor.fetchall()
+# for player in players:
+#	print(f"ID: {player[0]}, Codename: {player[1]}")
+
+# Closes PostgreSQL Connection
+connection.commit()
+connection.close()

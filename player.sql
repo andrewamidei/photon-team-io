@@ -10,5 +10,5 @@ CREATE TABLE player (
 
 --Place first record into table
 INSERT INTO player (id, codename)
-VALUES (1, 'EvanTest');
+VALUES (1, 'EvanTest1');
 
