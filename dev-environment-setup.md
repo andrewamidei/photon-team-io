@@ -2,7 +2,7 @@
 
 ### Table of Contents
 - [Creating a shared folder](https://github.com/andrewamidei/photon-team-io/blob/main/dev-environment-setup.md#creating-a-shared-folder)
-- [Installing CustomTkinter](https://github.com/andrewamidei/photon-team-io/blob/main/dev-environment-setup.md#install-tkinter)
+- [Installing Dependencies](https://github.com/andrewamidei/photon-team-io/blob/main/dev-environment-setup.md#install-Dependencies)
 - [Run your Python Code](https://github.com/andrewamidei/photon-team-io/blob/main/dev-environment-setup.md#run-python-code)
 
 ---
@@ -35,14 +35,27 @@ That should be it!
 
 ---
 
-### Install CustomTkinter
+### Install Dependencies
+
+install pip
+```
+sudo apt install -y python3-pip
+```
 
 This is a python library witch you can use to display UI elements.
-
 ```
 pip install customtkinter
 ```
----
+
+Customtkinter uses Pillow as a dependancy.
+```
+pip install pillow
+```
+
+Customtkinter also requires tkinter to function. The python built into Debian does not come with it, so use the below command to install it on python3.
+```
+sudo apt-get install python3-tk
+```
 
 ### Run Python Code
 
