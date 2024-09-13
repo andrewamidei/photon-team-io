@@ -37,7 +37,7 @@ That should be it!
 
 ### Install Dependencies
 
-install pip
+Install pip.
 ```
 sudo apt install -y python3-pip
 ```
