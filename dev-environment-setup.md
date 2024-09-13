@@ -11,12 +11,12 @@
 This shared folder can be used to transfer files to and from your VirtualBox system.
 
 - Before opening your VM navigate to the location you want to save the shared folder (I put mine in the location where my VM files are stored) 
-- Open VirtualBox and go to the setting of the VM.
+- Open VirtualBox and go to the settings of the VM.
 - Select shared folders.
 - Hit the folder plus icon in the top right corner.
 - Enter the path where your folder is stored.
 - Enter the folder name (name you will see on Linux)
-- Check auto mount and make permanent.
+- Check auto mount.
 - Hit ok to get out of all dialogs until you are back to the VirtualBox homepage.
 - Start the machine.
 
@@ -42,28 +42,23 @@ install pip
 sudo apt install -y python3-pip
 ```
 
-This is a python library witch you can use to display UI elements.
-```
-pip install customtkinter
-```
-
-Customtkinter uses Pillow as a dependancy.
-```
-pip install pillow
-```
-
-Customtkinter also requires tkinter to function. The python built into Debian does not come with it, so use the below command to install it on python3.
+Install Tkinter.
 ```
 sudo apt-get install python3-tk
 ```
 
+Install CustomTkinter & Pillow.
+```
+pip install customtkinter pillow
+```
+
 ### Run Python Code
 
-Navigate to the folder location where you have placed your python code. 
+Navigate to the folder location where you have placed your Python code. 
 
 Right click on the folder and select `Open Terminal Here`.
 
-Run your code by starting the main file
+Run your code by starting the main file.
 ```
 python3 main.py
 ```
