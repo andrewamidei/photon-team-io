@@ -13,22 +13,14 @@ import ui as ui
 
 # --- Global Definitions ---
 WINDOW_WIDTH = 900	# In pixels
-WINDOW_HEIGHT = 550	# In pixels
+WINDOW_HEIGHT = 650	# In pixels
 
 
 # --- Main function ---
 if __name__ == "__main__":
-	app = ctk.CTk()	# creates customtkinter object
-
-	app = ui.create_splash_screen(app, WINDOW_WIDTH, WINDOW_HEIGHT) # create start image
-
-	'''
-	TODO: Fix this issue:
 	
-	Behavior: Splash screen will kill itself and entry window will replace it.
-	Expexted behavuior: window will transition to entry screen.
-	'''
-	app.destroy() # kills the window
+	# Comment out the line below to skip the splash screen.
+	app = ui.create_splash_screen(WINDOW_WIDTH, WINDOW_HEIGHT) # create start image
 
 	app = ui.PhotonGUI(WINDOW_WIDTH, WINDOW_HEIGHT) # Opens entry terminal
 
