@@ -1,8 +1,6 @@
 import customtkinter as ctk
 from PIL import Image
 import time
-# import numpy as np
-import player as player
 
 '''
 The intention of this file is to serve as the ui library for Photon
