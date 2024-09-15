@@ -1,6 +1,9 @@
 # photon-team-io
 #### _Team 10_
 #### _Primary Language:_ **Python**
+
+Table of Contents:
+- [Database Instructions](#connect-database-to-python-file)
 ---
 
 ## Connect Database to Python file:
