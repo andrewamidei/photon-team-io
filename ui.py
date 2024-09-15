@@ -1,6 +1,7 @@
 import customtkinter as ctk
 from PIL import Image
 import time
+import psycopg2
 
 '''
 The intention of this file is to serve as the ui library for Photon
@@ -42,6 +43,19 @@ COUMN_SHIFT = 7
 ID_ENTRY_COLUMN = 1
 CODENAME_ENTRY_COLUMN = 3
  
+# --- Database Configuration ---
+# Connects Python to Postgre database
+connection = psycopg2.connect(
+	dbname="photon",
+	user="student",
+	password="student",
+	host="localhost",
+	port="5432"
+)
+
+# Create a cursor to execute SQL queries
+cursor = connection.cursor()
+
 # App Class
 class PhotonGUI(ctk.CTk):
     # The layout of the window will be written
@@ -112,6 +126,22 @@ class PhotonGUI(ctk.CTk):
     # This function is used to insert the data into the varibles below
     def submit(self):
         # TODO: add the functinallity here for database access
+        # INSERT RED PLAYERS INTO DATABASE
+        for player in range(10):
+            player_id = self.id_entry_red[player].get()
+            codename = self.codename_entry_red[player].get()
+            if player_id != '':
+                # Inserts all players from red team into table
+                cursor.execute(f"INSERT INTO player VALUES('{player_id}', '{codename}')")
+
+        # INSERT GREEN PLAYERS INTO DATABASE
+        for player in range(10):
+            player_id = self.id_entry_green[player].get()
+            codename = self.codename_entry_green[player].get()
+            if player_id != '':
+                # Inserts all players from green team into table
+                cursor.execute(f"INSERT INTO player VALUES('{player_id}', '{codename}')")
+        
 
         # gets very first row for ID and codename of the red team
         # use [#] to access the row you want
@@ -120,7 +150,14 @@ class PhotonGUI(ctk.CTk):
 
         # print ID and Codename to the console for debug
         # TODO: Remove when finished debugging
-        print(f'ID: {self.player_id} Codename: {self.codename}')
+        cursor.execute("SELECT * FROM player;")
+        players = cursor.fetchall()
+        for player in players:
+            print(f"ID: {player[0]}, Codename: {player[1]}")
+
+        # Closes PostgreSQL Connection
+        connection.commit()
+        # connection.close()
 
 
 # --- Functions ---
