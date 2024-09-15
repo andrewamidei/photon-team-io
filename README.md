@@ -18,23 +18,30 @@ pip install psycopg2-binary
 ## Managing the Database:
 To enter the database manually and make changes to the table, the following instructions must be followed:
 
-   <br/> 1. Switch to postgre user and enter SQL:
+### 1. Switch to postgre user and enter SQL:
 
 ```
 sudo -u postgres psql
 ```
-<br/> 2. Select photon database:
+### 2. Select photon database:
 
 ```
 \c photon
 ```
 
-<br/> 3. Display all records in player table:
+### 3. Display all records in player table:
 
 ```
 SELECT * from player;
 ```
 
 <br/> From here you can delete, add, or rename records in the table.
+
+### To delete (based on codename):
+**_(NOTE: All records sharing same selected codename will be deleted)_**
+
+```
+DELETE FROM player where(codename='<codename>');
+```
     
 ---
