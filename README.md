@@ -14,11 +14,27 @@ Install the following dependincies in the **_project folder_**:
 pip install psycopg2-binary
 ```
 
-#### Currently, the main.py file contains the following SQL-related functions:
-  1. Database setup
-  2. Addition of a test user _**(COMMENTED OUT)**_
-  3. Selection of all entries in the player table _**(COMMENTED OUT)**_
-  4. Printing of all players _**(COMMENTED OUT)-(To function, list item 3 must be added back to code)**_
-     
 #### _If an error is thrown, let me know and I will update README to include a fix._
+## Managing the Database:
+To enter the database manually and make changes to the table, the following instructions must be followed:
+
+   <br/> 1. Switch to postgre user and enter SQL:
+
+```
+sudo -u postgres psql
+```
+<br/> 2. Select photon database:
+
+```
+\c photon
+```
+
+<br/> 3. Display all records in player table:
+
+```
+SELECT * from player;
+```
+
+<br/> From here you can delete, add, or rename records in the table.
+    
 ---
