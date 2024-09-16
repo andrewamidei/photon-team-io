@@ -127,20 +127,20 @@ class PhotonGUI(ctk.CTk):
     def submit(self):
         # TODO: add the functinallity here for database access
         # INSERT RED PLAYERS INTO DATABASE
-        for player in range(10):
+        for player in range(MAX_PLAYERS):
             player_id = self.id_entry_red[player].get()
             codename = self.codename_entry_red[player].get()
             if player_id != '':
                 # Inserts all players from red team into table
-                cursor.execute(f"INSERT INTO player VALUES('{player_id}', '{codename}')")
+                cursor.execute(f"INSERT INTO players VALUES('{player_id}', '{codename}')")
 
         # INSERT GREEN PLAYERS INTO DATABASE
-        for player in range(10):
+        for player in range(MAX_PLAYERS):
             player_id = self.id_entry_green[player].get()
             codename = self.codename_entry_green[player].get()
             if player_id != '':
                 # Inserts all players from green team into table
-                cursor.execute(f"INSERT INTO player VALUES('{player_id}', '{codename}')")
+                cursor.execute(f"INSERT INTO players VALUES('{player_id}', '{codename}')")
         
 
         # gets very first row for ID and codename of the red team
@@ -150,7 +150,7 @@ class PhotonGUI(ctk.CTk):
 
         # print ID and Codename to the console for debug
         # TODO: Remove when finished debugging
-        cursor.execute("SELECT * FROM player;")
+        cursor.execute("SELECT * FROM players;")
         players = cursor.fetchall()
         for player in players:
             print(f"ID: {player[0]}, Codename: {player[1]}")
