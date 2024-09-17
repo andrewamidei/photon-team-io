@@ -2,49 +2,47 @@
 #### _Team 10_
 #### _Primary Language:_ **Python**
 
-Table of Contents:
-- [Database Instructions](#connect-database-to-python-file)
+### Team Members
+
+### Table of Contents:
+- [Installing Dependencies on vm](#install-dependencies-on-vm)
+- [Run your Python Code on vm](#run-python-code-on-vm)
+
+If you are looking to setup other parts of the VM check out [Developer Enviorment Setup](https://github.com/andrewamidei/photon-team-io/blob/main/dev-environment-setup.md).
+
 ---
 
-## Connect Database to Python file:
-Use the following line to give the postgre user (used to manipulate database) access to the shared folder:
+## Install Dependencies on vm
 
-    "sudo usermod -aG vboxsf postgres"
-
-Install the following dependincies in the **_project folder_**:
-
+Install pip.
 ```
-pip install psycopg2-binary
+sudo apt install -y python3-pip
 ```
 
-#### _If an error is thrown, let me know and I will update README to include a fix._
-## Managing the Database:
-To enter the database manually and make changes to the table, the following instructions must be followed:
-
-### 1. Switch to postgre user and enter SQL:
-
+Install Tkinter.
 ```
-sudo -u postgres psql
-```
-### 2. Select photon database:
-
-```
-\c photon
+sudo apt-get install python3-tk
 ```
 
-### 3. Display all records in player table:
-
+Install CustomTkinter, Pillow and psycopg2.
+- CustomTkinter is for the UI.
+- Pillow is used for images.
+- Psycopg2 is used or database access.
 ```
-SELECT * from player;
+pip install customtkinter pillow psycopg2-binary
 ```
 
-<br/> From here you can delete, add, or rename records in the table.
+---
 
-### To delete (based on codename):
-**_(NOTE: All records sharing same selected codename will be deleted)_**
+## Run Python Code on vm
 
+Navigate to the folder location where you have placed your Python code. 
+
+Right click on the folder and select `Open Terminal Here`.
+
+Run your code by starting the main file.
 ```
-DELETE FROM player where(codename='<codename>');
+python3 main.py
 ```
-    
+
 ---
