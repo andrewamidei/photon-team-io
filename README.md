@@ -2,13 +2,18 @@
 #### _Team 10_
 #### _Primary Language:_ **Python**
 
-### Team Members
+### Team Members:
+andrewamidei - Andrew Amidei
+tb087 - Tyler Brandon
+DConly - Duncan Conly
+EvanMeyerss - Evan Meyers
+ppolav01 - Pranav Polavarapu
 
 ### Table of Contents:
 - [Installing Dependencies on vm](#install-dependencies-on-vm)
 - [Run your Python Code on vm](#run-python-code-on-vm)
 
-If you are looking to setup other parts of the VM check out [Developer Enviorment Setup](https://github.com/andrewamidei/photon-team-io/blob/main/dev-environment-setup.md).
+If you are looking to setup other parts of the VM check out [Developer Environment Setup](https://github.com/andrewamidei/photon-team-io/blob/main/dev-environment-setup.md).
 
 ---
 

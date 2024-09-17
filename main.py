@@ -1,4 +1,4 @@
-# Andrew Amidei, Tyler Brandon, Doncan Conly, Evan Meyers, Pranav Polavarapu
+# Andrew Amidei, Tyler Brandon, Duncan Conly, Evan Meyers, Pranav Polavarapu
 # Created 9/11/2024
 # Temporary main file for all code
 

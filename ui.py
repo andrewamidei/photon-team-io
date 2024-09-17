@@ -5,10 +5,10 @@ import psycopg2
 
 '''
 The intention of this file is to serve as the ui library for Photon
-Lazer Tag software.
+Laser Tag software.
 
-As of 9/13/2024 this module will run a simple splash screen and
-display a entry terminal for use in setting up your game of lazer
+This module will run a simple splash screen and
+display a entry terminal for use in setting up your game of laser
 tag.
 '''
  
@@ -39,7 +39,7 @@ MAX_PLAYERS = 20 # max supported players on a team
 ENTRY_SPAN = 2
 
 # Orientation
-COUMN_SHIFT = 7
+COLUMN_SHIFT = 7
 ID_ENTRY_COLUMN = 1
 CODENAME_ENTRY_COLUMN = 3
  
@@ -83,7 +83,7 @@ class PhotonGUI(ctk.CTk):
 
         # Green Team title
         self.textbox = ctk.CTkLabel(self, text="Green Team", fg_color="transparent")
-        self.textbox.grid(row=0, column=2 + COUMN_SHIFT, padx=ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
+        self.textbox.grid(row=0, column=2 + COLUMN_SHIFT, padx=ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
 
         # Loop though and create all entry points for the red team
         row = 0
@@ -105,17 +105,17 @@ class PhotonGUI(ctk.CTk):
         row = 0
         for row in range(MAX_PLAYERS):
             self.textbox = ctk.CTkLabel(self, text=row, fg_color="transparent")
-            self.textbox.grid(row=row + 1, column=COUMN_SHIFT, padx=ROW_PADDING, pady=COLUMN_PADDING , sticky="ew")
+            self.textbox.grid(row=row + 1, column=COLUMN_SHIFT, padx=ROW_PADDING, pady=COLUMN_PADDING , sticky="ew")
 
             # Displays the ID entry box
             self.id_entry_green[row] = ctk.CTkEntry(self, placeholder_text=ID_PLACEHOLDER)
             # Positions element in a grid
-            self.id_entry_green[row].grid(row=row + 1, column=ID_ENTRY_COLUMN + COUMN_SHIFT, columnspan=ENTRY_SPAN, padx=ENTRY_ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
+            self.id_entry_green[row].grid(row=row + 1, column=ID_ENTRY_COLUMN + COLUMN_SHIFT, columnspan=ENTRY_SPAN, padx=ENTRY_ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
 
             # Displays the Codename entry box              
             self.codename_entry_green[row] = ctk.CTkEntry(self, placeholder_text=CODENAME_PLACEHOLDER)
             # Positions element in a grid
-            self.codename_entry_green[row].grid(row=row + 1, column=CODENAME_ENTRY_COLUMN + COUMN_SHIFT, columnspan=ENTRY_SPAN, padx=ENTRY_ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
+            self.codename_entry_green[row].grid(row=row + 1, column=CODENAME_ENTRY_COLUMN + COLUMN_SHIFT, columnspan=ENTRY_SPAN, padx=ENTRY_ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
 
         # Submit Button
         self.submit_button = ctk.CTkButton(self, text="Submit", command=self.submit)
@@ -123,9 +123,9 @@ class PhotonGUI(ctk.CTk):
         self.submit_button.grid(row=row + 2, column=1, columnspan=2, padx=ROW_PADDING, pady=ROW_PADDING, sticky="ew")
  
  
-    # This function is used to insert the data into the varibles below
+    # This function is used to insert the data into the variables below
     def submit(self):
-        # TODO: add the functinallity here for database access
+        # TODO: add the functionality here for database access
         # INSERT RED PLAYERS INTO DATABASE
         for player in range(MAX_PLAYERS):
             player_id = self.id_entry_red[player].get()
@@ -180,7 +180,7 @@ def create_splash_screen( window_width, window_height):
     app_window = ctk.CTk()	# creates customtkinter object
 
     app_window.geometry(str(window_width) + "x" + str(window_height))	# sets pixel size of window to WINDOW_WIDTHxWINDOW_HEIGHT
-    app_window.title(TITLE)	# sets titls of window to "Photon Control Panel"
+    app_window.title(TITLE)	# sets title of window
 
     center_window(app_window) # center the window
 
@@ -197,7 +197,7 @@ def create_splash_screen( window_width, window_height):
 
     # TODO: Fix this issue:
     # Behavior: Splash screen will kill itself and entry window will replace it.
-    # Expexted behavuior: window will transition to entry screen.
+    # Expected behavior: window will transition to entry screen.
     app_window.destroy() # kills the window
 
     return app_window
