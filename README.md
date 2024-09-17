@@ -3,11 +3,11 @@
 #### _Primary Language:_ **Python**
 
 ### Team Members:
-andrewamidei - Andrew Amidei
-tb087 - Tyler Brandon
-DConly - Duncan Conly
-EvanMeyerss - Evan Meyers
-ppolav01 - Pranav Polavarapu
+- andrewamidei - Andrew Amidei
+- tb087 - Tyler Brandon
+- DConly - Duncan Conly
+- EvanMeyerss - Evan Meyers
+- ppolav01 - Pranav Polavarapu
 
 ### Table of Contents:
 - [Installing Dependencies on vm](#install-dependencies-on-vm)
@@ -49,5 +49,3 @@ Run your code by starting the main file.
 ```
 python3 main.py
 ```
-
----
