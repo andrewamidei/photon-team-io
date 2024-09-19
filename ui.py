@@ -139,9 +139,11 @@ class PhotonGUI():
     # This function is used to insert the data into the varibles below
     def submit(self):
         # TODO: add the functionality here for database access
+        
+        # THE FOLLOWING HAS BEEN COMMENTED OUT AFTER FURTHER INSTRUCTIONS FROM PROF STROTHER
         # deleting players from the last time the submit button was clicked
-        for player in range(MAX_PLAYERS):
-            cursor.execute(f"DELETE FROM players") 
+        # for player in range(MAX_PLAYERS):
+        #    cursor.execute(f"DELETE FROM players") 
 
         # INSERT RED PLAYERS INTO DATABASE
         for player in range(MAX_PLAYERS):
