@@ -57,8 +57,12 @@ cursor = connection.cursor()
 class PhotonGUI():
     # The layout of the window will be written
     # in the init function itself
-    def __init__(self, window, app_width, app_height, *args, **kwargs):
+    def __init__(self, window, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        # Creates splash screen that lasts the durration of the loading time
+        logo_image = create_image(window, SPLASH_SCREEN_LOCATION, window.winfo_width(), window.winfo_height(), 0, 0) # Create the splash screen
+        window.update() # Updates window
         
         # Stored data for red team
         self.id_entry_red = ['null'] * MAX_PLAYERS
@@ -121,7 +125,8 @@ class PhotonGUI():
         self.submit_button = ctk.CTkButton(window, text="Submit", command=self.submit)
         # Positions element in a grid, the submit button now goes across the entire bottom portion
         self.submit_button.grid(row=row + 2, column=0, columnspan=COUMN_SHIFT+CODENAME_ENTRY_COLUMN+ENTRY_SPAN, padx=ROW_PADDING, pady=ROW_PADDING, sticky="ew")
- 
+
+        logo_image.destroy()  # Delete the splash screen when ui is finished loading
     
     # function used to check if there are duplicate player Ids and codenames being added to the database, returns true if there is
     def duplicateChecker(self, player_id, codename):
@@ -214,18 +219,6 @@ def create_image(window ,image_location, image_width, image_height, image_x, ima
     label.place(x = image_x, y = image_y)   # Moves the image to the x and y coordinates
 
     return label
-
-def create_splash_screen(window, window_width, window_height):
-    # --- Display Splash Screen ---
-    # removed "label image =" since no return was used
-    logo_image = create_image(window, SPLASH_SCREEN_LOCATION, window_width, window_height, 0, 0) # Create the splash screen
-
-    window.update() # Updates window
-
-    time.sleep(SPLASH_SCREEN_DURATION)  # Program will sleep for given seconds to show splash screen
-
-    # No longer needed
-    logo_image.destroy()  # Delete the splash screen
 
 def center_window(window):
     # Center any window

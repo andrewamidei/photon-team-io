@@ -17,10 +17,7 @@ TITLE = "Photon Control Panel" # Title for window
 # --- Main function ---
 if __name__ == "__main__":
 	app_window = ui.create_window(WINDOW_WIDTH, WINDOW_HEIGHT, TITLE)
-	
-	# Comment out the line below to skip the splash screen.
-	ui.create_splash_screen(app_window, WINDOW_WIDTH, WINDOW_HEIGHT) # create start image
 
-	ui.PhotonGUI(app_window, WINDOW_WIDTH, WINDOW_HEIGHT) # Opens entry terminal
+	ui.PhotonGUI(app_window) # Opens entry terminal
 
 	app_window.mainloop() # pauses the code
