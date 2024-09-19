@@ -24,9 +24,6 @@ ctk.set_default_color_theme("dark-blue")
 SPLASH_SCREEN_DURATION = 5  # In seconds
 SPLASH_SCREEN_LOCATION = "Images/logo.jpg"
 
-# App title
-TITLE = "Photon Control Panel" # Title for window
-
 # padding
 COLUMN_PADDING = 0 # Standard padding used between entry boxes
 ROW_PADDING = 20 # Standard padding used between entry boxes
@@ -57,10 +54,10 @@ connection = psycopg2.connect(
 cursor = connection.cursor()
 
 # App Class
-class PhotonGUI(ctk.CTk):
+class PhotonGUI():
     # The layout of the window will be written
     # in the init function itself
-    def __init__(self, app_width, app_height, *args, **kwargs):
+    def __init__(self, window, app_width, app_height, *args, **kwargs):
         super().__init__(*args, **kwargs)
         
         # Stored data for red team
@@ -71,63 +68,57 @@ class PhotonGUI(ctk.CTk):
         self.id_entry_green = ['null'] * MAX_PLAYERS
         self.codename_entry_green = ['null'] * MAX_PLAYERS
 
-        # Sets the title of the window to "App"
-        self.title(TITLE)
-
-        # Sets the dimensions of the window
-        self.geometry(f"{app_width}x{app_height}") 
-        
         # allows for the dynamic scaling of all the rows as the window size is being changed
         # the plus 2 is needed to account for the submit button at the bottom of the screen
         for row in range(0, MAX_PLAYERS + 2):
-            self.rowconfigure(row, weight=1)
+            window.rowconfigure(row, weight=1)
 
         # allows for the dynamic scaling of all the columns as the window size is being changed
         for column in range(0, COUMN_SHIFT+CODENAME_ENTRY_COLUMN+ENTRY_SPAN):
-            self.columnconfigure(column, weight=1)
+            window.columnconfigure(column, weight=1)
 
         # Red team title
-        self.textbox = ctk.CTkLabel(self, text="Red Team", fg_color="transparent")
+        self.textbox = ctk.CTkLabel(window, text="Red Team", fg_color="transparent")
         self.textbox.grid(row=0, column=2, padx=ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
 
         # Green Team title
-        self.textbox = ctk.CTkLabel(self, text="Green Team", fg_color="transparent")
+        self.textbox = ctk.CTkLabel(window, text="Green Team", fg_color="transparent")
         self.textbox.grid(row=0, column=2 + COUMN_SHIFT, padx=ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
 
         # Loop through and create all entry points for the red team
         row = 0
         for row in range(MAX_PLAYERS):
-            self.textbox = ctk.CTkLabel(self, text=row, fg_color="transparent")
+            self.textbox = ctk.CTkLabel(window, text=row, fg_color="transparent")
             self.textbox.grid(row=row + 1, column=0, padx=ROW_PADDING, pady=COLUMN_PADDING , sticky="ew")
 
             # Displays the ID entry box
-            self.id_entry_red[row] = ctk.CTkEntry(self, placeholder_text=ID_PLACEHOLDER)
+            self.id_entry_red[row] = ctk.CTkEntry(window, placeholder_text=ID_PLACEHOLDER)
             # Positions element in a grid
             self.id_entry_red[row].grid(row=row + 1, column=ID_ENTRY_COLUMN, columnspan=ENTRY_SPAN, padx=ENTRY_ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
 
             # Displays the Codename entry box              
-            self.codename_entry_red[row] = ctk.CTkEntry(self, placeholder_text=CODENAME_PLACEHOLDER)
+            self.codename_entry_red[row] = ctk.CTkEntry(window, placeholder_text=CODENAME_PLACEHOLDER)
             # Positions element in a grid
             self.codename_entry_red[row].grid(row=row + 1, column=CODENAME_ENTRY_COLUMN, columnspan=ENTRY_SPAN, padx=ENTRY_ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
 
         # Loop through and create all entry points for the green team
         row = 0
         for row in range(MAX_PLAYERS):
-            self.textbox = ctk.CTkLabel(self, text=row, fg_color="transparent")
+            self.textbox = ctk.CTkLabel(window, text=row, fg_color="transparent")
             self.textbox.grid(row=row + 1, column=COUMN_SHIFT, padx=ROW_PADDING, pady=COLUMN_PADDING , sticky="ew")
 
             # Displays the ID entry box
-            self.id_entry_green[row] = ctk.CTkEntry(self, placeholder_text=ID_PLACEHOLDER)
+            self.id_entry_green[row] = ctk.CTkEntry(window, placeholder_text=ID_PLACEHOLDER)
             # Positions element in a grid
             self.id_entry_green[row].grid(row=row + 1, column=ID_ENTRY_COLUMN + COUMN_SHIFT, columnspan=ENTRY_SPAN, padx=ENTRY_ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
 
             # Displays the Codename entry box              
-            self.codename_entry_green[row] = ctk.CTkEntry(self, placeholder_text=CODENAME_PLACEHOLDER)
+            self.codename_entry_green[row] = ctk.CTkEntry(window, placeholder_text=CODENAME_PLACEHOLDER)
             # Positions element in a grid
             self.codename_entry_green[row].grid(row=row + 1, column=CODENAME_ENTRY_COLUMN + COUMN_SHIFT, columnspan=ENTRY_SPAN, padx=ENTRY_ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
 
         # Submit Button
-        self.submit_button = ctk.CTkButton(self, text="Submit", command=self.submit)
+        self.submit_button = ctk.CTkButton(window, text="Submit", command=self.submit)
         # Positions element in a grid, the submit button now goes across the entire bottom portion
         self.submit_button.grid(row=row + 2, column=0, columnspan=COUMN_SHIFT+CODENAME_ENTRY_COLUMN+ENTRY_SPAN, padx=ROW_PADDING, pady=ROW_PADDING, sticky="ew")
  
@@ -198,7 +189,17 @@ class PhotonGUI(ctk.CTk):
 
 
 # --- Functions ---
-def create_image(app_window ,image_location, image_width, image_height, image_x, image_y):
+def create_window(width, height, title):
+    window = ctk.CTk()  # creates customtkinter object
+
+    window.geometry(str(width) + "x" + str(height))   # sets pixel size of window to widthxheight
+    window.title(title) # sets title of window to title
+
+    center_window(window) # center the window
+
+    return window
+
+def create_image(window ,image_location, image_width, image_height, image_x, image_y):
     # Creates an image label object then displays image of size on window at location.
     # Inputs: window - customtkinter window object to display image on
     #         image_location - file location of image to be displayed
@@ -209,35 +210,22 @@ def create_image(app_window ,image_location, image_width, image_height, image_x,
     # Outputs: label - CTkLabel object containing image and supporting info such as size and location
     
     image = ctk.CTkImage(light_image = Image.open(image_location), size = (image_width, image_height))  # Creates CTkImage object called "i" containing image file at location and size tuple
-    label = ctk.CTkLabel(master = app_window, image = image, text = "") # Creates a label object used to display the image in the given window
+    label = ctk.CTkLabel(master = window, image = image, text = "") # Creates a label object used to display the image in the given window
     label.place(x = image_x, y = image_y)   # Moves the image to the x and y coordinates
-    # return label
 
-def create_splash_screen( window_width, window_height):
-    app_window = ctk.CTk()  # creates customtkinter object
+    return label
 
-    app_window.geometry(str(window_width) + "x" + str(window_height))   # sets pixel size of window to WINDOW_WIDTHxWINDOW_HEIGHT
-    app_window.title(TITLE) # sets titls of window to "Photon Control Panel"
-
-    center_window(app_window) # center the window
-
+def create_splash_screen(window, window_width, window_height):
     # --- Display Splash Screen ---
     # removed "label image =" since no return was used
-    create_image(app_window, SPLASH_SCREEN_LOCATION, window_width, window_height, 0, 0) # Create the splash screen
+    logo_image = create_image(window, SPLASH_SCREEN_LOCATION, window_width, window_height, 0, 0) # Create the splash screen
 
-    app_window.update() # Updates window
+    window.update() # Updates window
 
     time.sleep(SPLASH_SCREEN_DURATION)  # Program will sleep for given seconds to show splash screen
 
     # No longer needed
-    # logo_image.destroy()  # Delete the splash screen
-
-    # TODO: Fix this issue:
-    # Behavior: Splash screen will kill itself and entry window will replace it.
-    # Expexted behavuior: window will transition to entry screen.
-    app_window.destroy() # kills the window
-
-    return app_window
+    logo_image.destroy()  # Delete the splash screen
 
 def center_window(window):
     # Center any window
