@@ -1,3 +1,12 @@
+'''
+The intention of this file is to serve as the ui library for Photon
+Laser Tag software.
+
+As of 9/13/2024 this module will run a simple splash screen and
+display a entry terminal for use in setting up your game of laser
+tag.
+'''
+
 import customtkinter as ctk
 from PIL import Image
 import time
@@ -5,14 +14,6 @@ import time
 # --- Modules ---
 import database as db
 
-'''
-The intention of this file is to serve as the ui library for Photon
-Lazer Tag software.
-
-As of 9/13/2024 this module will run a simple splash screen and
-display a entry terminal for use in setting up your game of laser
-tag.
-'''
  
 # Sets the appearance of the window
 # Supported modes : Light, Dark, System
@@ -38,7 +39,7 @@ MAX_PLAYERS = 20 # max supported players on a team
 ENTRY_SPAN = 2
 
 # Orientation
-COUMN_SHIFT = 7
+COLUMN_SHIFT = 7
 ID_ENTRY_COLUMN = 1
 CODENAME_ENTRY_COLUMN = 3
 
@@ -50,7 +51,7 @@ class PhotonGUI():
     def __init__(self, window, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # Creates splash screen that lasts the durration of the loading time
+        # Creates splash screen that lasts the duration of the loading time
         logo_image = create_image(window, SPLASH_SCREEN_LOCATION, window.winfo_width(), window.winfo_height(), 0, 0) # Create the splash screen
         window.update() # Updates window
         
@@ -68,20 +69,8 @@ class PhotonGUI():
             window.rowconfigure(row, weight=1)
 
         # allows for the dynamic scaling of all the columns as the window size is being changed
-        for column in range(0, COUMN_SHIFT+CODENAME_ENTRY_COLUMN+ENTRY_SPAN):
+        for column in range(0, COLUMN_SHIFT+CODENAME_ENTRY_COLUMN+ENTRY_SPAN):
             window.columnconfigure(column, weight=1)
-
-#         # Sets the dimensions of the window
-#         self.geometry(f"{app_width}x{app_height}") 
-        
-#         # the plus 2 is needed to account for the submit button at the bottom of the screen
-#         for row in range(0, MAX_PLAYERS + 2):
-#             self.rowconfigure(row, weight=1)
-
-#         for column in range(0, COLUMN_SHIFT+CODENAME_ENTRY_COLUMN+ENTRY_SPAN):
-#             self.columnconfigure(column, weight=1)
-
-#         center_window(self) # center the window
 
         # Red team title
         self.textbox = ctk.CTkLabel(window, text="Red Team", fg_color="transparent")
@@ -89,7 +78,7 @@ class PhotonGUI():
 
         # Green Team title
         self.textbox = ctk.CTkLabel(window, text="Green Team", fg_color="transparent")
-        self.textbox.grid(row=0, column=2 + COUMN_SHIFT, padx=ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
+        self.textbox.grid(row=0, column=2 + COLUMN_SHIFT, padx=ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
 
         # Loop through and create all entry points for the red team
         row = 0
@@ -111,99 +100,33 @@ class PhotonGUI():
         row = 0
         for row in range(MAX_PLAYERS):
             self.textbox = ctk.CTkLabel(window, text=row, fg_color="transparent")
-            self.textbox.grid(row=row + 1, column=COUMN_SHIFT, padx=ROW_PADDING, pady=COLUMN_PADDING , sticky="ew")
+            self.textbox.grid(row=row + 1, column=COLUMN_SHIFT, padx=ROW_PADDING, pady=COLUMN_PADDING , sticky="ew")
 
             # Displays the ID entry box
             self.id_entry_green[row] = ctk.CTkEntry(window, placeholder_text=ID_PLACEHOLDER)
             # Positions element in a grid
-            self.id_entry_green[row].grid(row=row + 1, column=ID_ENTRY_COLUMN + COUMN_SHIFT, columnspan=ENTRY_SPAN, padx=ENTRY_ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
+            self.id_entry_green[row].grid(row=row + 1, column=ID_ENTRY_COLUMN + COLUMN_SHIFT, columnspan=ENTRY_SPAN, padx=ENTRY_ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
 
             # Displays the Codename entry box              
             self.codename_entry_green[row] = ctk.CTkEntry(window, placeholder_text=CODENAME_PLACEHOLDER)
             # Positions element in a grid
-            self.codename_entry_green[row].grid(row=row + 1, column=CODENAME_ENTRY_COLUMN + COUMN_SHIFT, columnspan=ENTRY_SPAN, padx=ENTRY_ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
+            self.codename_entry_green[row].grid(row=row + 1, column=CODENAME_ENTRY_COLUMN + COLUMN_SHIFT, columnspan=ENTRY_SPAN, padx=ENTRY_ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
 
         # Submit Button
         self.submit_button = ctk.CTkButton(window, text="Submit", command=self.submit)
         # Positions element in a grid, the submit button now goes across the entire bottom portion
-        self.submit_button.grid(row=row + 2, column=0, columnspan=COUMN_SHIFT+CODENAME_ENTRY_COLUMN+ENTRY_SPAN, padx=ROW_PADDING, pady=ROW_PADDING, sticky="ew")
+        self.submit_button.grid(row=row + 2, column=0, columnspan=COLUMN_SHIFT+CODENAME_ENTRY_COLUMN+ENTRY_SPAN, padx=ROW_PADDING, pady=ROW_PADDING, sticky="ew")
 
         logo_image.destroy()  # Delete the splash screen when ui is finished loading
     
-    # --- Functions ---
-    
-    # function used to check if there are duplicate player Ids and codenames being added to the database, returns true if there is
-    def duplicateChecker(self, player_id, codename):
-        cursor.execute("SELECT * FROM players WHERE id = %s OR codename = %s", (player_id, codename))
-        result = cursor.fetchall()
-        if result:
-            return True
-        return False
-      
-    # This function is used to insert the data into the variables below
     def submit(self):
         db.refreshDatabase(self, MAX_PLAYERS)
 
-#     # This function is used to insert the data into the varibles below
-#     def submit(self):     
-#         # THE FOLLOWING HAS BEEN COMMENTED OUT AFTER FURTHER INSTRUCTIONS FROM PROF STROTHER
-#         # deleting players from the last time the submit button was clicked
-#         # for player in range(MAX_PLAYERS):
-#         #    cursor.execute(f"DELETE FROM players") 
-
-#         # INSERT RED PLAYERS INTO DATABASE
-#         for player in range(MAX_PLAYERS):
-#             player_id = self.id_entry_red[player].get()
-#             codename = self.codename_entry_red[player].get()
-#             if player_id and codename:
-#                 # checking if the added codename and player_id is a duplicate of one that already exists
-#                 if not self.duplicateChecker(player_id, codename):
-#                     # Inserts all players from red team into table
-#                     cursor.execute(f"INSERT INTO players VALUES('{player_id}', '{codename}')")
-#                 else:
-#                     continue
-#                     # print message included here in case we will need for future implementation - print("Player ID or Codename has already been entered, please try again with different inputs")
-
-#         # INSERT GREEN PLAYERS INTO DATABASE
-#         for player in range(MAX_PLAYERS): 
-#             player_id = self.id_entry_green[player].get()
-#             codename = self.codename_entry_green[player].get()
-#             if player_id and codename:
-#                 # checking if the added codename and player_id is a duplicate of one that already exists
-#                 if not self.duplicateChecker(player_id, codename):
-#                     # Inserts all players from green team into table
-#                     cursor.execute(f"INSERT INTO players VALUES('{player_id}', '{codename}')")
-#                 else:
-#                     continue
-#                     # print message included here in case we will need for future implementation - print("Player ID or Codename has already been entered, please try again with different inputs")
-        
-#         #this is being used to remove whatever is currently in the input boxes for the codename and player ID
-#         for player in range(MAX_PLAYERS):
-#             self.id_entry_red[player].delete(0, 'end')
-#             self.codename_entry_red[player].delete(0, 'end') 
-#             self.id_entry_green[player].delete(0, 'end')
-#             self.codename_entry_green[player].delete(0, 'end')
-
-#         # gets very first row for ID and codename of the red team
-#         # use [#] to access the row you want
-#         self.player_id = self.id_entry_red[0].get()
-#         self.codename = self.codename_entry_red[0].get()
-
-#         # print ID and Codename to the console for debug
-#         # TODO: Remove when finished debugging
-#         cursor.execute("SELECT * FROM players;")
-#         players = cursor.fetchall()
-#         for player in players:
-#             print(f"ID: {player[0]}, Codename: {player[1]}")
-
-#         # Closes PostgreSQL Connection
-#         connection.commit()
-#         # connection.close()
-
+# --- Functions ---
 def create_window(width, height, title):
     window = ctk.CTk()  # creates customtkinter object
 
-    window.geometry(str(width) + "x" + str(height))   # sets pixel size of window to widthxheight
+    window.geometry(str(width) + "x" + str(height))   # sets pixel size of window to width x height
     window.title(title) # sets title of window to title
 
     center_window(window) # center the window
