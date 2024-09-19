@@ -1,14 +1,16 @@
 import customtkinter as ctk
 from PIL import Image
 import time
-import psycopg2
+
+# --- Modules ---
+import database as db
 
 '''
 The intention of this file is to serve as the ui library for Photon
 Lazer Tag software.
 
 As of 9/13/2024 this module will run a simple splash screen and
-display a entry terminal for use in setting up your game of lazer
+display a entry terminal for use in setting up your game of laser
 tag.
 '''
  
@@ -39,19 +41,7 @@ ENTRY_SPAN = 2
 COUMN_SHIFT = 7
 ID_ENTRY_COLUMN = 1
 CODENAME_ENTRY_COLUMN = 3
- 
-# --- Database Configuration ---
-# Connects Python to Postgre database
-connection = psycopg2.connect(
-    dbname="photon",
-    user="student",
-    password="student",
-    host="localhost",
-    port="5432"
-)
 
-# Create a cursor to execute SQL queries
-cursor = connection.cursor()
 
 # App Class
 class PhotonGUI():
@@ -80,6 +70,18 @@ class PhotonGUI():
         # allows for the dynamic scaling of all the columns as the window size is being changed
         for column in range(0, COUMN_SHIFT+CODENAME_ENTRY_COLUMN+ENTRY_SPAN):
             window.columnconfigure(column, weight=1)
+
+#         # Sets the dimensions of the window
+#         self.geometry(f"{app_width}x{app_height}") 
+        
+#         # the plus 2 is needed to account for the submit button at the bottom of the screen
+#         for row in range(0, MAX_PLAYERS + 2):
+#             self.rowconfigure(row, weight=1)
+
+#         for column in range(0, COLUMN_SHIFT+CODENAME_ENTRY_COLUMN+ENTRY_SPAN):
+#             self.columnconfigure(column, weight=1)
+
+#         center_window(self) # center the window
 
         # Red team title
         self.textbox = ctk.CTkLabel(window, text="Red Team", fg_color="transparent")
@@ -128,6 +130,8 @@ class PhotonGUI():
 
         logo_image.destroy()  # Delete the splash screen when ui is finished loading
     
+    # --- Functions ---
+    
     # function used to check if there are duplicate player Ids and codenames being added to the database, returns true if there is
     def duplicateChecker(self, player_id, codename):
         cursor.execute("SELECT * FROM players WHERE id = %s OR codename = %s", (player_id, codename))
@@ -135,67 +139,67 @@ class PhotonGUI():
         if result:
             return True
         return False
-
-    # This function is used to insert the data into the varibles below
+      
+    # This function is used to insert the data into the variables below
     def submit(self):
-        # TODO: add the functionality here for database access
+        db.refreshDatabase(self, MAX_PLAYERS)
+
+#     # This function is used to insert the data into the varibles below
+#     def submit(self):     
+#         # THE FOLLOWING HAS BEEN COMMENTED OUT AFTER FURTHER INSTRUCTIONS FROM PROF STROTHER
+#         # deleting players from the last time the submit button was clicked
+#         # for player in range(MAX_PLAYERS):
+#         #    cursor.execute(f"DELETE FROM players") 
+
+#         # INSERT RED PLAYERS INTO DATABASE
+#         for player in range(MAX_PLAYERS):
+#             player_id = self.id_entry_red[player].get()
+#             codename = self.codename_entry_red[player].get()
+#             if player_id and codename:
+#                 # checking if the added codename and player_id is a duplicate of one that already exists
+#                 if not self.duplicateChecker(player_id, codename):
+#                     # Inserts all players from red team into table
+#                     cursor.execute(f"INSERT INTO players VALUES('{player_id}', '{codename}')")
+#                 else:
+#                     continue
+#                     # print message included here in case we will need for future implementation - print("Player ID or Codename has already been entered, please try again with different inputs")
+
+#         # INSERT GREEN PLAYERS INTO DATABASE
+#         for player in range(MAX_PLAYERS): 
+#             player_id = self.id_entry_green[player].get()
+#             codename = self.codename_entry_green[player].get()
+#             if player_id and codename:
+#                 # checking if the added codename and player_id is a duplicate of one that already exists
+#                 if not self.duplicateChecker(player_id, codename):
+#                     # Inserts all players from green team into table
+#                     cursor.execute(f"INSERT INTO players VALUES('{player_id}', '{codename}')")
+#                 else:
+#                     continue
+#                     # print message included here in case we will need for future implementation - print("Player ID or Codename has already been entered, please try again with different inputs")
         
-        # THE FOLLOWING HAS BEEN COMMENTED OUT AFTER FURTHER INSTRUCTIONS FROM PROF STROTHER
-        # deleting players from the last time the submit button was clicked
-        # for player in range(MAX_PLAYERS):
-        #    cursor.execute(f"DELETE FROM players") 
+#         #this is being used to remove whatever is currently in the input boxes for the codename and player ID
+#         for player in range(MAX_PLAYERS):
+#             self.id_entry_red[player].delete(0, 'end')
+#             self.codename_entry_red[player].delete(0, 'end') 
+#             self.id_entry_green[player].delete(0, 'end')
+#             self.codename_entry_green[player].delete(0, 'end')
 
-        # INSERT RED PLAYERS INTO DATABASE
-        for player in range(MAX_PLAYERS):
-            player_id = self.id_entry_red[player].get()
-            codename = self.codename_entry_red[player].get()
-            if player_id and codename:
-                # checking if the added codename and player_id is a duplicate of one that already exists
-                if not self.duplicateChecker(player_id, codename):
-                    # Inserts all players from red team into table
-                    cursor.execute(f"INSERT INTO players VALUES('{player_id}', '{codename}')")
-                else:
-                    continue
-                    # print message included here in case we will need for future implementation - print("Player ID or Codename has already been entered, please try again with different inputs")
+#         # gets very first row for ID and codename of the red team
+#         # use [#] to access the row you want
+#         self.player_id = self.id_entry_red[0].get()
+#         self.codename = self.codename_entry_red[0].get()
 
-        # INSERT GREEN PLAYERS INTO DATABASE
-        for player in range(MAX_PLAYERS): 
-            player_id = self.id_entry_green[player].get()
-            codename = self.codename_entry_green[player].get()
-            if player_id and codename:
-                # checking if the added codename and player_id is a duplicate of one that already exists
-                if not self.duplicateChecker(player_id, codename):
-                    # Inserts all players from green team into table
-                    cursor.execute(f"INSERT INTO players VALUES('{player_id}', '{codename}')")
-                else:
-                    continue
-                    # print message included here in case we will need for future implementation - print("Player ID or Codename has already been entered, please try again with different inputs")
-        
-        #this is being used to remove whatever is currently in the input boxes for the codename and player ID
-        for player in range(MAX_PLAYERS):
-            self.id_entry_red[player].delete(0, 'end')
-            self.codename_entry_red[player].delete(0, 'end') 
-            self.id_entry_green[player].delete(0, 'end')
-            self.codename_entry_green[player].delete(0, 'end')
+#         # print ID and Codename to the console for debug
+#         # TODO: Remove when finished debugging
+#         cursor.execute("SELECT * FROM players;")
+#         players = cursor.fetchall()
+#         for player in players:
+#             print(f"ID: {player[0]}, Codename: {player[1]}")
 
-        # gets very first row for ID and codename of the red team
-        # use [#] to access the row you want
-        self.player_id = self.id_entry_red[0].get()
-        self.codename = self.codename_entry_red[0].get()
+#         # Closes PostgreSQL Connection
+#         connection.commit()
+#         # connection.close()
 
-        # print ID and Codename to the console for debug
-        # TODO: Remove when finished debugging
-        cursor.execute("SELECT * FROM players;")
-        players = cursor.fetchall()
-        for player in players:
-            print(f"ID: {player[0]}, Codename: {player[1]}")
-
-        # Closes PostgreSQL Connection
-        connection.commit()
-        # connection.close()
-
-
-# --- Functions ---
 def create_window(width, height, title):
     window = ctk.CTk()  # creates customtkinter object
 
@@ -231,4 +235,6 @@ def center_window(window):
     screen_height = window.winfo_screenheight()
     x = (screen_width - width) // 2
     y = (screen_height - height) // 2
+
     window.geometry(f"{width}x{height}+{x}+{y}")
+
