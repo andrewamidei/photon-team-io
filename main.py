@@ -18,10 +18,8 @@ WINDOW_HEIGHT = 650	# In pixels
 if __name__ == "__main__":
 	
 	# Comment out the line below to skip the splash screen.
-	app = ui.create_splash_screen(WINDOW_WIDTH, WINDOW_HEIGHT) # create start image
+	# app = ui.create_splash_screen(WINDOW_WIDTH, WINDOW_HEIGHT) # create start image
 
 	app = ui.PhotonGUI(WINDOW_WIDTH, WINDOW_HEIGHT) # Opens entry terminal
-
-	ui.center_window(app) # center the window
 
 	app.mainloop() # pauses the code
