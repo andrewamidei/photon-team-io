@@ -54,10 +54,3 @@ python3 main.py
 ```
 
 ---
-
-
-```
-DELETE FROM player where(codename='<codename>');
-```
-
----
