@@ -32,10 +32,6 @@ def insertPlayer(player_id, codename, team, max_players):
 
 
 def refreshDatabase(app, max_players):
-    # TODO: add the functionality here for database access
-    #need to delete players from the last time the submit button was clicked
-    for player in range(max_players):
-        cursor.execute(f"DELETE FROM players")
     # INSERT RED PLAYERS INTO DATABASE
     for player in range(max_players):
         player_id = app.id_entry_red[player].get()
