@@ -9,6 +9,11 @@ import customtkinter as ctk
 # --- Modules ---
 import ui as ui
 
+# --- UDP ---
+import udp_client as udp_client
+import udp_server as udp_server
+
+
 # --- Global Definitions ---
 WINDOW_WIDTH = 900	# In pixels
 WINDOW_HEIGHT = 650	# In pixels
