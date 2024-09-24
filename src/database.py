@@ -4,10 +4,7 @@ import psycopg2
 # Connects Python to Postgre database
 connection = psycopg2.connect(
 	dbname="photon",
-	user="student",
-	password="student",
-	host="localhost",
-	port="5432"
+	user="student"
 )
 
 # Create a cursor to execute SQL queries
