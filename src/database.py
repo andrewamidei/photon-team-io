@@ -33,6 +33,7 @@ def refreshDatabase(app, max_players):
     for player in range(max_players):
         player_id = app.id_entry_red[player].get()
         codename = app.codename_entry_red[player].get()
+        
         insertPlayer(player_id, codename, "red", max_players)
 
     # INSERT GREEN PLAYERS INTO DATABASE

@@ -66,51 +66,6 @@ class PhotonGUI():
 
         create_entry_terminal(self, window)
 
-    #     # Red team title
-    #     self.textbox = ctk.CTkLabel(window, text="Red Team", fg_color="transparent")
-    #     self.textbox.grid(row=0, column=2, padx=ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
-    #
-    #     # Green Team title
-    #     self.textbox = ctk.CTkLabel(window, text="Green Team", fg_color="transparent")
-    #     self.textbox.grid(row=0, column=2 + COLUMN_SHIFT, padx=ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
-    #
-    #     # Loop through and create all entry points for the red team
-    #     row = 0
-    #     for row in range(MAX_PLAYERS):
-    #         self.textbox = ctk.CTkLabel(window, text=row, fg_color="transparent")
-    #         self.textbox.grid(row=row + 1, column=0, padx=ROW_PADDING, pady=COLUMN_PADDING , sticky="ew")
-    #
-    #         # Displays the ID entry box
-    #         self.id_entry_red[row] = ctk.CTkEntry(window, placeholder_text=ID_PLACEHOLDER)
-    #         # Positions element in a grid
-    #         self.id_entry_red[row].grid(row=row + 1, column=ID_ENTRY_COLUMN, columnspan=ENTRY_SPAN, padx=ENTRY_ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
-    #
-    #         # Displays the Codename entry box              
-    #         self.codename_entry_red[row] = ctk.CTkEntry(window, placeholder_text=CODENAME_PLACEHOLDER)
-    #         # Positions element in a grid
-    #         self.codename_entry_red[row].grid(row=row + 1, column=CODENAME_ENTRY_COLUMN, columnspan=ENTRY_SPAN, padx=ENTRY_ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
-    #
-    #     # Loop through and create all entry points for the green team
-    #     row = 0
-    #     for row in range(MAX_PLAYERS):
-    #         self.textbox = ctk.CTkLabel(window, text=row, fg_color="transparent")
-    #         self.textbox.grid(row=row + 1, column=COLUMN_SHIFT, padx=ROW_PADDING, pady=COLUMN_PADDING , sticky="ew")
-    #
-    #         # Displays the ID entry box
-    #         self.id_entry_green[row] = ctk.CTkEntry(window, placeholder_text=ID_PLACEHOLDER)
-    #         # Positions element in a grid
-    #         self.id_entry_green[row].grid(row=row + 1, column=ID_ENTRY_COLUMN + COLUMN_SHIFT, columnspan=ENTRY_SPAN, padx=ENTRY_ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
-    #
-    #         # Displays the Codename entry box              
-    #         self.codename_entry_green[row] = ctk.CTkEntry(window, placeholder_text=CODENAME_PLACEHOLDER)
-    #         # Positions element in a grid
-    #         self.codename_entry_green[row].grid(row=row + 1, column=CODENAME_ENTRY_COLUMN + COLUMN_SHIFT, columnspan=ENTRY_SPAN, padx=ENTRY_ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
-    #
-    #     # Submit Button
-    #     self.submit_button = ctk.CTkButton(window, text="Submit", command=self.submit)
-    #     # Positions element in a grid, the submit button now goes across the entire bottom portion
-    #     self.submit_button.grid(row=row + 2, column=0, columnspan=COLUMN_SHIFT+CODENAME_ENTRY_COLUMN+ENTRY_SPAN, padx=ROW_PADDING, pady=ROW_PADDING, sticky="ew")
-
         logo_image.destroy()  # Delete the splash screen when ui is finished loading
     
 def submit(window):
@@ -194,7 +149,7 @@ def create_entry_terminal(self, window):
         self.codename_entry_green[row].grid(row=row + 1, column=CODENAME_ENTRY_COLUMN + COLUMN_SHIFT, columnspan=ENTRY_SPAN, padx=ENTRY_ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
 
     # Submit Button
-    self.submit_button = ctk.CTkButton(window, text="Submit", command=submit(self))
+    self.submit_button = ctk.CTkButton(window, text="Submit", command=lambda: submit(self))
     # Positions element in a grid, the submit button now goes across the entire bottom portion
     self.submit_button.grid(row=row + 2, column=0, columnspan=COLUMN_SHIFT+CODENAME_ENTRY_COLUMN+ENTRY_SPAN, padx=ROW_PADDING, pady=ROW_PADDING, sticky="ew")
 
