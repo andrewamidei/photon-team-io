@@ -152,6 +152,9 @@ def create_entry_terminal(self, window):
     self.submit_button = ctk.CTkButton(window, text="Submit", command=lambda: submit(self))
     # Positions element in a grid, the submit button now goes across the entire bottom portion
     self.submit_button.grid(row=row + 2, column=0, columnspan=COLUMN_SHIFT+CODENAME_ENTRY_COLUMN+ENTRY_SPAN, padx=ROW_PADDING, pady=ROW_PADDING, sticky="ew")
+    # Creating start game button
+    self.start_button = ctk.CTkButton(window, text="Start Game!", command=lambda: submit(self), fg_color: "green", hover_color: "dark green")
+    self.start_button.grid(row=row + 3, column=0, columnspan=COLUMN_SHIFT+CODENAME_ENTRY_COLUMN+ENTRY_SPAN, padx=ROW_PADDING, pady=ROW_PADDING, sticky="ew")
 
 def center_window(window):
     # Center any window
