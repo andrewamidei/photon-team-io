@@ -11,14 +11,14 @@ def udp_server(IP="127.0.0.1", port=5000):
     print(f"Server listening on {IP}:{port}")
 
     while True:
-        # Receive message from the client
+        # receive message from the client
         message, address = udp_socket.recvfrom(buffer_size)
         message = message.decode()
 
         print("Message from Client:", message)
         print("Client IP Address:", address)
 
-        # Optionally, send a response back to the client
+        # send response back to the client
         response = f"Received your message: {message}"
         udp_socket.sendto(response.encode(), address)
 
