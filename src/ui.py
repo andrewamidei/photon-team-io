@@ -71,36 +71,11 @@ class PhotonGUI():
        self.codename_entry_green = ['null'] * MAX_PLAYERS
        self.hardware_id_entry_green = ['null'] * MAX_PLAYERS
 
-
        create_entry_terminal(self, window)
 
-       logo_image.destroy()  # Delete the splash screen when ui is finished loading
-   
-   def transmit_equipment_codes(self, team, player_id, codename):
-      message = f"Team: {team}, ID: {player_id}, Codename: {codename}"
-      response = send_udp_message(message)
-      if response:
-         print(f"Server response: {response}")
-      else :
-         print("Failed to trasnmit equipment.")
-##########################################################3
-   def clear_entries(self) :
-      for entry in self.id_entry_red:
-         if isinstance(entry, ctk.CTkEntry):
-            entry.delete(0, ctk.END)
-      for entry in self.codename_entry_red:
-         if isinstance(entry, ctk.CTkEntry):
-            entry.delete(0, ctk.END)
-      for entry in self.id_entry_green:
-         if isinstance(entry, ctk.CTkEntry):
-            entry.delete(0, ctk.END)
-      for entry in self.codename_entry_green:
-         if isinstance(entry, ctk.CTkEntry):
-            entry.delete(0, ctk.END)
+       # create_game_action(self,window)
 
- #######################################  
-def submit(window):
-   db.refreshDatabase(window, MAX_PLAYERS)
+       logo_image.destroy()  # Delete the splash screen when ui is finished loading
 
 # --- Functions ---
 def create_entry_window(width, height, title):
@@ -112,6 +87,9 @@ def create_entry_window(width, height, title):
    center_window(window) # center the window
 
    return window
+
+def submit(window):
+   db.refreshDatabase(window, MAX_PLAYERS)
 
 def create_image(window ,image_location, image_width, image_height, image_x, image_y):
    # Creates an image label object then displays image of size on window at location.
@@ -234,6 +212,29 @@ def create_entry_terminal(self, window):
    # Bind F12 key to clear all entries
    window.bind("<F12>", lambda event: self.clear_entries())
 
+def create_game_action(self, window):
+    # allows for the dynamic scaling of all the rows as the window size is being changed
+    # the plus 2 is needed to account for the submit button at the bottom of the screen
+    for row in range(0, MAX_PLAYERS + 2):
+        window.rowconfigure(row, weight=1)
+
+    # allows for the dynamic scaling of all the columns as the window size is being changed
+    for column in range(0, COLUMN_SHIFT+CODENAME_ENTRY_COLUMN+ENTRY_SPAN):
+        window.columnconfigure(column, weight=1)
+
+    # Red team title
+    self.textbox = ctk.CTkLabel(window, text="Red Team", fg_color="transparent")
+    self.textbox.grid(row=0, column=2, padx=ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
+
+    # Green Team title
+    self.textbox = ctk.CTkLabel(window, text="Green Team", fg_color="transparent")
+    self.textbox.grid(row=0, column=2 + COLUMN_SHIFT, padx=ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
+
+    self.console = ctk.CTkTextbox(master=self, width=400, corner_radius=0)
+    self.console.grid(row=0, column=0, sticky="ew")
+    self.console.insert("0.0", "Some example text!\n" * 50)
+
+
 def center_window(window):
    # Center any window
    window.update_idletasks()
@@ -246,3 +247,26 @@ def center_window(window):
 
    window.geometry(f"{width}x{height}+{x}+{y}")
 
+def transmit_equipment_codes(self, team, player_id, codename):
+    message = f"Team: {team}, ID: {player_id}, Codename: {codename}"
+    response = send_udp_message(message)
+    if response:
+        print(f"Server response: {response}")
+    else :
+        print("Failed to transmit equipment.")
+
+#######################################
+def clear_entries(self) :
+    for entry in self.id_entry_red:
+        if isinstance(entry, ctk.CTkEntry):
+            entry.delete(0, ctk.END)
+    for entry in self.codename_entry_red:
+        if isinstance(entry, ctk.CTkEntry):
+            entry.delete(0, ctk.END)
+    for entry in self.id_entry_green:
+        if isinstance(entry, ctk.CTkEntry):
+            entry.delete(0, ctk.END)
+    for entry in self.codename_entry_green:
+        if isinstance(entry, ctk.CTkEntry):
+            entry.delete(0, ctk.END)
+ #######################################  
