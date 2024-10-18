@@ -33,6 +33,7 @@ ENTRY_ROW_PADDING = 5 # Standard padding for a entry box
 # Entry placeholders
 ID_PLACEHOLDER = 'ID'
 CODENAME_PLACEHOLDER = 'Codename'
+HARDWARE_ID_PLACEHOLDER = 'Hardware ID'
 MAX_PLAYERS = 20 # max supported players on a team
 ENTRY_SPAN = 2
 
@@ -56,10 +57,12 @@ class PhotonGUI():
        # Stored data for red team
        self.id_entry_red = ['null'] * MAX_PLAYERS
        self.codename_entry_red = ['null'] * MAX_PLAYERS
+       self.hardware_id_entry_red = ['null'] * MAX_PLAYERS
    
        # Stored data for green team
        self.id_entry_green = ['null'] * MAX_PLAYERS
        self.codename_entry_green = ['null'] * MAX_PLAYERS
+       self.hardware_id_entry_green = ['null'] * MAX_PLAYERS
 
 
        create_entry_terminal(self, window)
@@ -103,7 +106,7 @@ def create_entry_terminal(self, window):
        window.rowconfigure(row, weight=1)
 
    # allows for the dynamic scaling of all the columns as the window size is being changed
-   for column in range(0, COLUMN_SHIFT+CODENAME_ENTRY_COLUMN+ENTRY_SPAN):
+   for column in range(0, COLUMN_SHIFT+CODENAME_ENTRY_COLUMN+ENTRY_SPAN+2):
        window.columnconfigure(column, weight=1)
 
    # Red team title
@@ -130,6 +133,12 @@ def create_entry_terminal(self, window):
        # Positions element in a grid
        self.codename_entry_red[row].grid(row=row + 1, column=CODENAME_ENTRY_COLUMN, columnspan=ENTRY_SPAN, padx=ENTRY_ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
 
+       # Displays the Hardware ID entry box
+       self.hardware_id_entry_red[row] = ctk.CTkEntry(window, placeholder_text=HARDWARE_ID_PLACEHOLDER)
+       # Positions element in a grid
+       self.hardware_id_entry_red[row].grid(row=row + 1, column=CODENAME_ENTRY_COLUMN + 2, columnspan=ENTRY_SPAN, padx=ENTRY_ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
+
+
    # Loop through and create all entry points for the green team
    row = 0
    for row in range(MAX_PLAYERS):
@@ -145,6 +154,10 @@ def create_entry_terminal(self, window):
        self.codename_entry_green[row] = ctk.CTkEntry(window, placeholder_text=CODENAME_PLACEHOLDER)
        # Positions element in a grid
        self.codename_entry_green[row].grid(row=row + 1, column=CODENAME_ENTRY_COLUMN + COLUMN_SHIFT, columnspan=ENTRY_SPAN, padx=ENTRY_ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
+
+       # Displays the Hardware ID entry box
+       self.hardware_id_entry_green[row] = ctk.CTkEntry(window, placeholder_text=HARDWARE_ID_PLACEHOLDER)
+       self.hardware_id_entry_green[row].grid(row=row + 1, column=CODENAME_ENTRY_COLUMN + 2 + COLUMN_SHIFT, columnspan=ENTRY_SPAN, padx=ENTRY_ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
 
    # Submit Button
    self.submit_button = ctk.CTkButton(window, text="Submit", command=lambda: submit(self))
