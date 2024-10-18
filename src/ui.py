@@ -66,50 +66,7 @@ class PhotonGUI():
 
         create_entry_terminal(self, window)
 
-    #     # Red team title
-    #     self.textbox = ctk.CTkLabel(window, text="Red Team", fg_color="transparent")
-    #     self.textbox.grid(row=0, column=2, padx=ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
-    #
-    #     # Green Team title
-    #     self.textbox = ctk.CTkLabel(window, text="Green Team", fg_color="transparent")
-    #     self.textbox.grid(row=0, column=2 + COLUMN_SHIFT, padx=ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
-    #
-    #     # Loop through and create all entry points for the red team
-    #     row = 0
-    #     for row in range(MAX_PLAYERS):
-    #         self.textbox = ctk.CTkLabel(window, text=row, fg_color="transparent")
-    #         self.textbox.grid(row=row + 1, column=0, padx=ROW_PADDING, pady=COLUMN_PADDING , sticky="ew")
-    #
-    #         # Displays the ID entry box
-    #         self.id_entry_red[row] = ctk.CTkEntry(window, placeholder_text=ID_PLACEHOLDER)
-    #         # Positions element in a grid
-    #         self.id_entry_red[row].grid(row=row + 1, column=ID_ENTRY_COLUMN, columnspan=ENTRY_SPAN, padx=ENTRY_ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
-    #
-    #         # Displays the Codename entry box              
-    #         self.codename_entry_red[row] = ctk.CTkEntry(window, placeholder_text=CODENAME_PLACEHOLDER)
-    #         # Positions element in a grid
-    #         self.codename_entry_red[row].grid(row=row + 1, column=CODENAME_ENTRY_COLUMN, columnspan=ENTRY_SPAN, padx=ENTRY_ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
-    #
-    #     # Loop through and create all entry points for the green team
-    #     row = 0
-    #     for row in range(MAX_PLAYERS):
-    #         self.textbox = ctk.CTkLabel(window, text=row, fg_color="transparent")
-    #         self.textbox.grid(row=row + 1, column=COLUMN_SHIFT, padx=ROW_PADDING, pady=COLUMN_PADDING , sticky="ew")
-    #
-    #         # Displays the ID entry box
-    #         self.id_entry_green[row] = ctk.CTkEntry(window, placeholder_text=ID_PLACEHOLDER)
-    #         # Positions element in a grid
-    #         self.id_entry_green[row].grid(row=row + 1, column=ID_ENTRY_COLUMN + COLUMN_SHIFT, columnspan=ENTRY_SPAN, padx=ENTRY_ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
-    #
-    #         # Displays the Codename entry box              
-    #         self.codename_entry_green[row] = ctk.CTkEntry(window, placeholder_text=CODENAME_PLACEHOLDER)
-    #         # Positions element in a grid
-    #         self.codename_entry_green[row].grid(row=row + 1, column=CODENAME_ENTRY_COLUMN + COLUMN_SHIFT, columnspan=ENTRY_SPAN, padx=ENTRY_ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
-    #
-    #     # Submit Button
-    #     self.submit_button = ctk.CTkButton(window, text="Submit", command=self.submit)
-    #     # Positions element in a grid, the submit button now goes across the entire bottom portion
-    #     self.submit_button.grid(row=row + 2, column=0, columnspan=COLUMN_SHIFT+CODENAME_ENTRY_COLUMN+ENTRY_SPAN, padx=ROW_PADDING, pady=ROW_PADDING, sticky="ew")
+        # create_game_action(self,window)
 
         logo_image.destroy()  # Delete the splash screen when ui is finished loading
     
@@ -194,9 +151,33 @@ def create_entry_terminal(self, window):
         self.codename_entry_green[row].grid(row=row + 1, column=CODENAME_ENTRY_COLUMN + COLUMN_SHIFT, columnspan=ENTRY_SPAN, padx=ENTRY_ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
 
     # Submit Button
-    self.submit_button = ctk.CTkButton(window, text="Submit", command=submit(self))
+    self.submit_button = ctk.CTkButton(window, text="Submit", command=lambda: submit(self))
     # Positions element in a grid, the submit button now goes across the entire bottom portion
     self.submit_button.grid(row=row + 2, column=0, columnspan=COLUMN_SHIFT+CODENAME_ENTRY_COLUMN+ENTRY_SPAN, padx=ROW_PADDING, pady=ROW_PADDING, sticky="ew")
+
+def create_game_action(self, window):
+    # allows for the dynamic scaling of all the rows as the window size is being changed
+    # the plus 2 is needed to account for the submit button at the bottom of the screen
+    for row in range(0, MAX_PLAYERS + 2):
+        window.rowconfigure(row, weight=1)
+
+    # allows for the dynamic scaling of all the columns as the window size is being changed
+    for column in range(0, COLUMN_SHIFT+CODENAME_ENTRY_COLUMN+ENTRY_SPAN):
+        window.columnconfigure(column, weight=1)
+
+    # Red team title
+    self.textbox = ctk.CTkLabel(window, text="Red Team", fg_color="transparent")
+    self.textbox.grid(row=0, column=2, padx=ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
+
+    # Green Team title
+    self.textbox = ctk.CTkLabel(window, text="Green Team", fg_color="transparent")
+    self.textbox.grid(row=0, column=2 + COLUMN_SHIFT, padx=ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
+
+    self.console = ctk.CTkTextbox(master=self, width=400, corner_radius=0)
+    self.console.grid(row=0, column=0, sticky="ew")
+    self.console.insert("0.0", "Some example text!\n" * 50)
+
+    
 
 def center_window(window):
     # Center any window
