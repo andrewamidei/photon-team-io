@@ -78,7 +78,7 @@ Use the following line to give the postgre user (used to manipulate database) ac
 
     "sudo usermod -aG vboxsf postgres"
 
-Install the following dependincies in the **_project folder_**:
+Install the following dependencies in the **_project folder_**:
 
 ```
 pip install psycopg2-binary
@@ -107,11 +107,18 @@ SELECT * from player;
 
 <br/> From here you can delete, add, or rename records in the table.
 
-### To delete (based on codename):
+### 4. To delete (based on codename):
 **_(NOTE: All records sharing same selected codename will be deleted)_**
 
 ```
 DELETE FROM player where(codename='<codename>');
+```
+
+### 5. To delete all records:
+
+```
+TRUNCATE players;
+DELETE FROM players;
 ```
 
 ---
