@@ -14,6 +14,8 @@ import time
 # --- Modules ---
 import database as db
 
+from udp_client import send_udp_message
+
 # Sets the appearance of the window
 # Supported modes : Light, Dark, System
 ctk.set_appearance_mode("Dark")   
@@ -74,6 +76,29 @@ class PhotonGUI():
 
        logo_image.destroy()  # Delete the splash screen when ui is finished loading
    
+   def transmit_equipment_codes(self, team, player_id, codename):
+      message = f"Team: {team}, ID: {player_id}, Codename: {codename}"
+      response = send_udp_message(message)
+      if response:
+         print(f"Server response: {response}")
+      else :
+         print("Failed to trasnmit equipment.")
+##########################################################3
+   def clear_entries(self) :
+      for entry in self.id_entry_red:
+         if isinstance(entry, ctk.CTkEntry):
+            entry.delete(0, ctk.END)
+      for entry in self.codename_entry_red:
+         if isinstance(entry, ctk.CTkEntry):
+            entry.delete(0, ctk.END)
+      for entry in self.id_entry_green:
+         if isinstance(entry, ctk.CTkEntry):
+            entry.delete(0, ctk.END)
+      for entry in self.codename_entry_green:
+         if isinstance(entry, ctk.CTkEntry):
+            entry.delete(0, ctk.END)
+
+ #######################################  
 def submit(window):
    db.refreshDatabase(window, MAX_PLAYERS)
 
@@ -206,6 +231,9 @@ def create_entry_terminal(self, window):
    window.bind("<s>", lambda event: create_game_window(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT, GAME_WINDOW_NAME))
    window.bind("<S>", lambda event: create_game_window(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT, GAME_WINDOW_NAME))
 
+   # Bind F12 key to clear all entries
+   window.bind("<F12>", lambda event: self.clear_entries())
+
 def center_window(window):
    # Center any window
    window.update_idletasks()
@@ -217,3 +245,4 @@ def center_window(window):
    y = (screen_height - height) // 2
 
    window.geometry(f"{width}x{height}+{x}+{y}")
+
