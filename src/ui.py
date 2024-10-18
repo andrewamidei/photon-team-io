@@ -41,6 +41,11 @@ COLUMN_SHIFT = 7
 ID_ENTRY_COLUMN = 1
 CODENAME_ENTRY_COLUMN = 3
 
+# Game window
+GAME_WINDOW_WIDTH = 586    # Dont touch unless necessary
+GAME_WINDOW_HEIGHT = 445   # Dont touch unless necessary
+GAME_WINDOW_NAME = "Photon Game Window"
+
 
 # App Class
 class PhotonGUI():
@@ -70,7 +75,7 @@ def submit(window):
    db.refreshDatabase(window, MAX_PLAYERS)
 
 # --- Functions ---
-def create_window(width, height, title):
+def create_entry_window(width, height, title):
    window = ctk.CTk()  # creates customtkinter object
 
    window.geometry(str(width) + "x" + str(height))   # sets pixel size of window to width x height
@@ -95,6 +100,30 @@ def create_image(window ,image_location, image_width, image_height, image_x, ima
    label.place(x = image_x, y = image_y)   # Moves the image to the x and y coordinates
 
    return label
+
+def create_game_window(width, height, title):
+   window = ctk.CTkToplevel()
+
+   window.geometry(str(width) + "x" + str(height))   # sets pixel size of window to width x height
+   window.title(title) # sets title of window to title
+
+   center_window(window) # center the window
+
+   background_image = create_image(window, "Images/background.tif", width, height, 0, 0)
+   window.update() # Updates window
+
+   for x in range(5, -1, -1):
+      image = create_image(window, "Images/" + str(x) + ".tif", 246, 111, 171, 204)
+      window.update() # Updates window
+
+      time.sleep(1)
+
+      image.destroy()
+
+   background_image.destroy()
+
+   # _________________________
+   # countdown is over, so put the ui stuff here or the call to it
 
 def create_entry_terminal(self, window):
    # allows for the dynamic scaling of all the rows as the window size is being changed
@@ -158,11 +187,11 @@ def create_entry_terminal(self, window):
    # IMPORTANT: Andrew, when you are putting your UI changes in below, all you will likely need to do is either modify the create_window function or create a new one with your code inside and call it below
    #            The below code is using an existing function to demonstrate that the code actually does work and currently serves as a placeholder for your code; feel free to modify the dimensions of the
    #            new play action display as it suits your specific UI
-   self.start_button = ctk.CTkButton(window, text="Start Game!", command=lambda: create_window(500, 500, "Photon Starting Screen"), fg_color="green", hover_color = "dark green")
+   self.start_button = ctk.CTkButton(window, text="Start Game!", command=lambda: create_game_window(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT, GAME_WINDOW_NAME), fg_color="green", hover_color = "dark green")
    self.start_button.grid(row=row + 4, column=0, columnspan=COLUMN_SHIFT+CODENAME_ENTRY_COLUMN+ENTRY_SPAN, padx=ROW_PADDING, pady=ROW_PADDING, sticky="ew")
    # Also creating binds for the key presses to increase convenience and accessibility
-   window.bind("<s>", lambda event: create_window(500, 500, "Photon Starting Screen"))
-   window.bind("<S>", lambda event: create_window(500, 500, "Photon Starting Screen"))
+   window.bind("<s>", lambda event: create_game_window(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT, GAME_WINDOW_NAME))
+   window.bind("<S>", lambda event: create_game_window(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT, GAME_WINDOW_NAME))
 
 def center_window(window):
    # Center any window
