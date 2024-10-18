@@ -21,7 +21,7 @@ TITLE = "Photon Control Panel" # Title for window
 
 # --- Main function ---
 if __name__ == "__main__":
-	app_window = ui.create_window(WINDOW_WIDTH, WINDOW_HEIGHT, TITLE)
+	app_window = ui.create_entry_window(WINDOW_WIDTH, WINDOW_HEIGHT, TITLE)
 
 	ui.PhotonGUI(app_window) # Opens entry terminal
 
