@@ -77,6 +77,29 @@ class PhotonGUI():
 
        logo_image.destroy()  # Delete the splash screen when ui is finished loading
 
+   def clear_entries(self) :
+      for entry in self.id_entry_red:
+         if isinstance(entry, ctk.CTkEntry):
+            entry.delete(0, ctk.END)
+      for entry in self.codename_entry_red:
+         if isinstance(entry, ctk.CTkEntry):
+            entry.delete(0, ctk.END)
+      for entry in self.id_entry_green:
+         if isinstance(entry, ctk.CTkEntry):
+            entry.delete(0, ctk.END)
+      for entry in self.codename_entry_green:
+         if isinstance(entry, ctk.CTkEntry):
+            entry.delete(0, ctk.END)
+      for entry in self.hardware_id_entry_red:
+         if isinstance(entry, ctk.CTkEntry):
+            entry.delete(0, ctk.END)
+      for entry in self.hardware_id_entry_green:
+         if isinstance(entry, ctk.CTkEntry):
+            entry.delete(0, ctk.END)
+
+
+
+
 # --- Functions ---
 def create_entry_window(width, height, title):
    window = ctk.CTk()  # creates customtkinter object
@@ -88,6 +111,20 @@ def create_entry_window(width, height, title):
 
    return window
 
+def clear_entries(self) :
+    for entry in self.id_entry_red:
+        if isinstance(entry, ctk.CTkEntry):
+            entry.delete(0, ctk.END)
+    for entry in self.codename_entry_red:
+        if isinstance(entry, ctk.CTkEntry):
+            entry.delete(0, ctk.END)
+    for entry in self.id_entry_green:
+        if isinstance(entry, ctk.CTkEntry):
+            entry.delete(0, ctk.END)
+    for entry in self.codename_entry_green:
+        if isinstance(entry, ctk.CTkEntry):
+            entry.delete(0, ctk.END)
+            
 def submit(window):
    db.refreshDatabase(window, MAX_PLAYERS)
 
@@ -253,17 +290,5 @@ def transmit_equipment_codes(self, team, player_id, codename):
         print("Failed to transmit equipment.")
 
 #######################################
-def clear_entries(self) :
-    for entry in self.id_entry_red:
-        if isinstance(entry, ctk.CTkEntry):
-            entry.delete(0, ctk.END)
-    for entry in self.codename_entry_red:
-        if isinstance(entry, ctk.CTkEntry):
-            entry.delete(0, ctk.END)
-    for entry in self.id_entry_green:
-        if isinstance(entry, ctk.CTkEntry):
-            entry.delete(0, ctk.END)
-    for entry in self.codename_entry_green:
-        if isinstance(entry, ctk.CTkEntry):
-            entry.delete(0, ctk.END)
+
  #######################################  
