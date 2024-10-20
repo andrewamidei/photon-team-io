@@ -196,18 +196,15 @@ def create_entry_terminal(self, window):
    # Positions element in a grid, the submit button now goes across the entire bottom portion
    self.submit_button.grid(row=row + 2, column=0, columnspan=COLUMN_SHIFT+CODENAME_ENTRY_COLUMN+ENTRY_SPAN, padx=ROW_PADDING, pady=ROW_PADDING, sticky="ew")
    
-   self.instructions = ctk.CTkLabel(window, text="Click the button or press 's' or 'S' when you are ready to start the game")
+   self.instructions = ctk.CTkLabel(window, text="Click the button or press 'F5' when you are ready to start the game")
    self.instructions.grid(row=row + 3, column=0, columnspan=COLUMN_SHIFT+CODENAME_ENTRY_COLUMN+ENTRY_SPAN, padx=ROW_PADDING, pady=0, sticky="ew")
    
    # Start Button
-   # IMPORTANT: Andrew, when you are putting your UI changes in below, all you will likely need to do is either modify the create_window function or create a new one with your code inside and call it below
-   #            The below code is using an existing function to demonstrate that the code actually does work and currently serves as a placeholder for your code; feel free to modify the dimensions of the
-   #            new play action display as it suits your specific UI
    self.start_button = ctk.CTkButton(window, text="Start Game!", command=lambda: create_game_window(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT, GAME_WINDOW_NAME), fg_color="green", hover_color = "dark green")
    self.start_button.grid(row=row + 4, column=0, columnspan=COLUMN_SHIFT+CODENAME_ENTRY_COLUMN+ENTRY_SPAN, padx=ROW_PADDING, pady=ROW_PADDING, sticky="ew")
    # Also creating binds for the key presses to increase convenience and accessibility
-   window.bind("<s>", lambda event: create_game_window(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT, GAME_WINDOW_NAME))
-   window.bind("<S>", lambda event: create_game_window(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT, GAME_WINDOW_NAME))
+   window.bind("<F5>", lambda event: create_game_window(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT, GAME_WINDOW_NAME))
+   window.bind("<F5>", lambda event: create_game_window(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT, GAME_WINDOW_NAME))
 
    # Bind F12 key to clear all entries
    window.bind("<F12>", lambda event: self.clear_entries())
