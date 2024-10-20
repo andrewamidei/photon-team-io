@@ -152,7 +152,7 @@ def create_entry_terminal(self, window):
    # Loop through and create all entry points for the red team
    row = 0
    for row in range(MAX_PLAYERS):
-       self.textbox = ctk.CTkLabel(window, text=row, fg_color="transparent")
+       self.textbox = ctk.CTkLabel(window, text=row, fg_color="transparent", width = 25)
        self.textbox.grid(row=row + 1, column=0, padx=ROW_PADDING, pady=COLUMN_PADDING , sticky="ew")
 
        # Displays the ID entry box
@@ -174,7 +174,7 @@ def create_entry_terminal(self, window):
    # Loop through and create all entry points for the green team
    row = 0
    for row in range(MAX_PLAYERS):
-       self.textbox = ctk.CTkLabel(window, text=row, fg_color="transparent")
+       self.textbox = ctk.CTkLabel(window, text=row, fg_color="transparent", width = 25)
        self.textbox.grid(row=row + 1, column=COLUMN_SHIFT, padx=ROW_PADDING, pady=COLUMN_PADDING , sticky="ew")
 
        # Displays the ID entry box

@@ -74,4 +74,4 @@ def refreshDatabase(app, max_players):
 
     # Closes PostgreSQL Connection
     connection.commit()
-    # connection.close()
+    connection.close()
