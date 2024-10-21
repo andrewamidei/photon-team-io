@@ -128,8 +128,7 @@ def create_game_window(width, height, title):
 
    background_image.destroy()
 
-   # _________________________
-   # countdown is over, so put the ui stuff here or the call to it
+   create_game_action(window)
 
 def create_entry_terminal(self, window):
    # allows for the dynamic scaling of all the rows as the window size is being changed
@@ -152,7 +151,7 @@ def create_entry_terminal(self, window):
    # Loop through and create all entry points for the red team
    row = 0
    for row in range(MAX_PLAYERS):
-       self.textbox = ctk.CTkLabel(window, text=row, fg_color="transparent")
+       self.textbox = ctk.CTkLabel(window, text=row, fg_color="transparent", width=25)
        self.textbox.grid(row=row + 1, column=0, padx=ROW_PADDING, pady=COLUMN_PADDING , sticky="ew")
 
        # Displays the ID entry box
@@ -174,7 +173,7 @@ def create_entry_terminal(self, window):
    # Loop through and create all entry points for the green team
    row = 0
    for row in range(MAX_PLAYERS):
-       self.textbox = ctk.CTkLabel(window, text=row, fg_color="transparent")
+       self.textbox = ctk.CTkLabel(window, text=row, fg_color="transparent", width=25)
        self.textbox.grid(row=row + 1, column=COLUMN_SHIFT, padx=ROW_PADDING, pady=COLUMN_PADDING , sticky="ew")
 
        # Displays the ID entry box
@@ -209,7 +208,7 @@ def create_entry_terminal(self, window):
    # Bind F12 key to clear all entries
    window.bind("<F12>", lambda event: self.clear_entries())
 
-def create_game_action(self, window):
+def create_game_action(window):
     # allows for the dynamic scaling of all the rows as the window size is being changed
     # the plus 2 is needed to account for the submit button at the bottom of the screen
     for row in range(0, MAX_PLAYERS + 2):
@@ -220,16 +219,16 @@ def create_game_action(self, window):
         window.columnconfigure(column, weight=1)
 
     # Red team title
-    self.textbox = ctk.CTkLabel(window, text="Red Team", fg_color="transparent")
-    self.textbox.grid(row=0, column=2, padx=ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
+    textbox = ctk.CTkLabel(window, text="Red Team", fg_color="transparent")
+    textbox.grid(row=0, column=2, padx=ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
 
     # Green Team title
-    self.textbox = ctk.CTkLabel(window, text="Green Team", fg_color="transparent")
-    self.textbox.grid(row=0, column=2 + COLUMN_SHIFT, padx=ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
+    textbox = ctk.CTkLabel(window, text="Green Team", fg_color="transparent")
+    textbox.grid(row=0, column=2 + COLUMN_SHIFT, padx=ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
 
-    self.console = ctk.CTkTextbox(master=self, width=400, corner_radius=0)
-    self.console.grid(row=0, column=0, sticky="ew")
-    self.console.insert("0.0", "Some example text!\n" * 50)
+    console = ctk.CTkTextbox(master=window, width=400, corner_radius=0)
+    console.grid(row=0, column=0, sticky="ew")
+    console.insert("0.0", "Some example text!\n" * 50)
 
 
 def center_window(window):
