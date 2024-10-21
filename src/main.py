@@ -25,7 +25,7 @@ def start_udp_server():
 
 # --- Main function ---
 if __name__ == "__main__":
-	# start UDP in seperate thread so that it can run in the same terminal while the other code runs
+	# start UDP in separate thread so that it can run in the same terminal while the other code runs
 	server_thread = threading.Thread(target=start_udp_server) # creating the new thread
 	server_thread.start() # starting the new thread
 
