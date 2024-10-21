@@ -42,11 +42,11 @@ pip install customtkinter pillow psycopg2-binary
 
 ## Run Python Code on vm
 
-Navigate to the folder location where you have placed your Python code. 
+Navigate to the folder location where you have placed your Python code. (look in the src folder for the .py files)
 
 
 
-Right click on the folder and select `Open Terminal Here`.
+Right click in the folder and select `Open Terminal Here`.
 
 Run your code by starting the main file.
 ```
