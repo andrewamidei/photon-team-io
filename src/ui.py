@@ -100,17 +100,25 @@ class PhotonGUI():
 
         self.display_entries(window)
 
+        row += 2 # go to next row
+
         # Submit Button
         self.submit_button = ctk.CTkButton(window, text="Submit", command=lambda: self.submit())
         # Positions element in a grid, the submit button now goes across the entire bottom portion
-        self.submit_button.grid(row=row + 2, column=0, columnspan=TOTAL_SPAN, padx=BUTTON_PADDING, pady=BUTTON_PADDING, sticky="ew")
+        self.submit_button.grid(row=row, column=0, columnspan=TOTAL_SPAN, padx=BUTTON_PADDING, pady=BUTTON_PADDING, sticky="ew")
+        row += 1 # go to next row
 
         self.instructions = ctk.CTkLabel(window, text="Click the button or press 'F5' when you are ready to start the game")
-        self.instructions.grid(row=row + 3, column=0, columnspan=TOTAL_SPAN, padx=BUTTON_PADDING, pady=BUTTON_PADDING, sticky="ew")
+        self.instructions.grid(row=row, column=0, columnspan=TOTAL_SPAN, padx=BUTTON_PADDING, pady=BUTTON_PADDING, sticky="ew")
+        row += 1 # go to next row
+
+        self.instructions = ctk.CTkLabel(window, text="Press 'F12' To clear Player entries")
+        self.instructions.grid(row=row, column=0, columnspan=TOTAL_SPAN, padx=BUTTON_PADDING, pady=BUTTON_PADDING, sticky="ew")
+        row += 1 # go to next row
 
         # Start Button
         self.start_button = ctk.CTkButton(window, text="Start Game!", command=lambda: self.create_game_action(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT, GAME_WINDOW_NAME), fg_color="green", hover_color = "dark green")
-        self.start_button.grid(row=row + 4, column=0, columnspan=TOTAL_SPAN, padx=BUTTON_PADDING, pady=BUTTON_PADDING, sticky="ew")
+        self.start_button.grid(row=row, column=0, columnspan=TOTAL_SPAN, padx=BUTTON_PADDING, pady=BUTTON_PADDING, sticky="ew")
         # Also creating binds for the key presses to increase convenience and accessibility
         window.bind("<F5>", lambda event: self.create_game_action(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT, GAME_WINDOW_NAME))
         window.bind("<F5>", lambda event: self.create_game_action(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT, GAME_WINDOW_NAME))
@@ -194,8 +202,6 @@ class PhotonGUI():
         self.textbox.grid(row=row, column=4, padx=ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
         row += 1 # go to next row
 
-        print("Codename = " + self.id_entry_red[0].get()) # TODO : find why this can't display original data
-
         # Red team codename and score titles
         ctk.CTkLabel(window ,text="Codename").grid(row=row, column=0, columnspan=2, padx=5, pady=0, sticky="ew")
         ctk.CTkLabel(window ,text="Score").grid(row=row, column=2, columnspan=1, padx=5, pady=0, sticky="ew")
@@ -246,7 +252,7 @@ class PhotonGUI():
         
         console = ctk.CTkTextbox(window)
         console.grid(row=row, column=0, columnspan=6, padx=BUTTON_PADDING, pady=BUTTON_PADDING, sticky="ew")
-        console.insert("0.0", "Some example text!\nSome more Text\n")
+        console.insert("0.0", "Active!")
         row += 1 # go to next row
 
         ctk.CTkLabel(window ,text="Time Remaining: 0:00").grid(row=row, column=4 , columnspan=2, padx=5, pady=0, sticky="ew")
@@ -266,12 +272,20 @@ class PhotonGUI():
         for entry in self.codename_entry_red:
             if isinstance(entry, ctk.CTkEntry):
                 entry.delete(0, ctk.END)
+        for entry in self.hardware_id_entry_red:
+            if isinstance(entry, ctk.CTkEntry):
+                entry.delete(0, ctk.END)
+
         for entry in self.id_entry_green:
             if isinstance(entry, ctk.CTkEntry):
                 entry.delete(0, ctk.END)
         for entry in self.codename_entry_green:
             if isinstance(entry, ctk.CTkEntry):
                 entry.delete(0, ctk.END)
+        for entry in self.hardware_id_entry_green:
+            if isinstance(entry, ctk.CTkEntry):
+                entry.delete(0, ctk.END)
+                
 
 
 ################# Functions #################
