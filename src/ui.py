@@ -210,28 +210,31 @@ class PhotonGUI():
         row += 1 # go to next row
 
         # Print Out player Lists
-        
-        all_playersListed = False
-        while all_playersListed == False:
-            # Displays the codename for the red team    
-            red_team_codename = ctk.CTkLabel(window ,text=self.id_entry_red[row].get())
-            red_team_codename.grid(row=row, column=0, columnspan=2, padx=5, pady=0, sticky="ew")
+        player_score_red = [0] * MAX_PLAYERS
+        player_score_green = [0] * MAX_PLAYERS
 
-            # Displays the score for the red team
-            red_team_score = ctk.CTkLabel(window ,text=player_score_red[row])
-            red_team_score.grid(row=row, column=2, columnspan=1, padx=5, pady=0, sticky="ew")
+        # Display player data in a loop
+        for player in range(MAX_PLAYERS):
+            red_id = self.id_entry_red[player].get()
+            green_id = self.id_entry_green[player].get()
 
-            # Displays the codename for the green team 
-            green_team_codename = ctk.CTkLabel(window ,text=self.id_entry_red[row].get())
-            green_team_codename.grid(row=row, column=3, columnspan=2, padx=5, pady=0, sticky="ew")
+            # Check if there is data for the red team
+            if red_id != '' and self.codename_entry_red[player].get() != '':
+                # Display red team codename and score
+                red_team_codename = ctk.CTkLabel(window, text=self.codename_entry_red[player].get())
+                red_team_codename.grid(row=row, column=0, columnspan=2, padx=5, pady=0, sticky="ew")
+                red_team_score = ctk.CTkLabel(window, text=player_score_red[player])
+                red_team_score.grid(row=row, column=2, columnspan=1, padx=5, pady=0, sticky="ew")
 
-            # Displays the score for the green team
-            green_team_score = ctk.CTkLabel(window ,text=player_score_green[row])
-            green_team_score.grid(row=row, column=5, columnspan=1, padx=5, pady=0, sticky="ew")
-            
-            if self.id_entry_red[row] == 'null' or row >= MAX_PLAYERS - 1:
-                all_playersListed = True
-            row += 1 # go to next row
+            # Check if there is data for the green team
+            if green_id != '' and self.codename_entry_green[player].get() != '':
+                # Display green team codename and score
+                green_team_codename = ctk.CTkLabel(window, text=self.codename_entry_green[player].get())
+                green_team_codename.grid(row=row, column=3, columnspan=2, padx=5, pady=0, sticky="ew")
+                green_team_score = ctk.CTkLabel(window, text=player_score_green[player])
+                green_team_score.grid(row=row, column=5, columnspan=1, padx=5, pady=0, sticky="ew")
+
+            row += 1  # go to next row
 
         # Total score for red team
         red_total_score = 0
