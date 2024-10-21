@@ -105,15 +105,15 @@ class PhotonGUI():
         # Positions element in a grid, the submit button now goes across the entire bottom portion
         self.submit_button.grid(row=row + 2, column=0, columnspan=TOTAL_SPAN, padx=BUTTON_PADDING, pady=BUTTON_PADDING, sticky="ew")
 
-        self.instructions = ctk.CTkLabel(window, text="Click the button or press 's' or 'S' when you are ready to start the game")
+        self.instructions = ctk.CTkLabel(window, text="Click the button or press 'F5' when you are ready to start the game")
         self.instructions.grid(row=row + 3, column=0, columnspan=TOTAL_SPAN, padx=BUTTON_PADDING, pady=BUTTON_PADDING, sticky="ew")
 
         # Start Button
         self.start_button = ctk.CTkButton(window, text="Start Game!", command=lambda: self.create_game_action(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT, GAME_WINDOW_NAME), fg_color="green", hover_color = "dark green")
         self.start_button.grid(row=row + 4, column=0, columnspan=TOTAL_SPAN, padx=BUTTON_PADDING, pady=BUTTON_PADDING, sticky="ew")
         # Also creating binds for the key presses to increase convenience and accessibility
-        window.bind("<s>", lambda event: self.create_game_action(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT, GAME_WINDOW_NAME))
-        window.bind("<S>", lambda event: self.create_game_action(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT, GAME_WINDOW_NAME))
+        window.bind("<F5>", lambda event: self.create_game_action(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT, GAME_WINDOW_NAME))
+        window.bind("<F5>", lambda event: self.create_game_action(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT, GAME_WINDOW_NAME))
 
         # Bind F12 key to clear all entries
         window.bind("<F12>", lambda event: self.clear_entries())
@@ -196,10 +196,6 @@ class PhotonGUI():
 
         print("Codename = " + self.id_entry_red[0].get()) # TODO : find why this can't display original data
 
-        # TODO: Temp value storing scores
-        player_score_red = [0] * MAX_PLAYERS
-        player_score_green = [0] * MAX_PLAYERS
-
         # Red team codename and score titles
         ctk.CTkLabel(window ,text="Codename").grid(row=row, column=0, columnspan=2, padx=5, pady=0, sticky="ew")
         ctk.CTkLabel(window ,text="Score").grid(row=row, column=2, columnspan=1, padx=5, pady=0, sticky="ew")
@@ -209,7 +205,7 @@ class PhotonGUI():
         ctk.CTkLabel(window ,text="Score").grid(row=row, column=5, columnspan=1, padx=5, pady=0, sticky="ew")
         row += 1 # go to next row
 
-        # Print Out player Lists
+        # TODO: Temp value storing scores
         player_score_red = [0] * MAX_PLAYERS
         player_score_green = [0] * MAX_PLAYERS
 

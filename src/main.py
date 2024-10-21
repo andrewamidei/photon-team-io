@@ -20,17 +20,26 @@ WINDOW_WIDTH = 900	# In pixels
 WINDOW_HEIGHT = 650	# In pixels
 TITLE = "Photon Control Panel" # Title for window
 
-def start_udp_server():
-	udp_server.udp_server()
+def start_udp_server(stop_event):
+	udp_server.udp_server(stop_event)
 
 # --- Main function ---
 if __name__ == "__main__":
-	# start UDP in separate thread so that it can run in the same terminal while the other code runs
-	server_thread = threading.Thread(target=start_udp_server) # creating the new thread
+
+	stop_event = threading.Event()
+
+	# start UDP in seperate thread so that it can run in the same terminal while the other code runs
+	server_thread = threading.Thread(target=start_udp_server,args=(stop_event,), daemon=True) # creating the new thread
 	server_thread.start() # starting the new thread
 
 	app_window = ui.create_entry_window(WINDOW_WIDTH, WINDOW_HEIGHT, TITLE)
 
 	ui.PhotonGUI(app_window) # Opens entry terminal
 
-	app_window.mainloop() # pauses the code
+	try :
+		app_window.mainloop() # pauses the code
+	finally : # when the code is unpaused
+		stop_event.set()
+		server_thread.join()
+	
+ 
