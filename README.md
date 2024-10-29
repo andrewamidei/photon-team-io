@@ -38,6 +38,12 @@ Install CustomTkinter, Pillow and psycopg2.
 pip install customtkinter pillow psycopg2-binary
 ```
 
+Install the following database dependency in the **_project folder_**:
+
+```
+pip install psycopg2-binary
+```
+
 ---
 
 ## Run Python Code on vm
