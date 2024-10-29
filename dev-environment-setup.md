@@ -78,11 +78,6 @@ Use the following line to give the postgre user (used to manipulate database) ac
 
     "sudo usermod -aG vboxsf postgres"
 
-Install the following dependencies in the **_project folder_**:
-
-```
-pip install psycopg2-binary
-```
 
 #### _If an error is thrown, let me know and I will update README to include a fix._
 ## Managing the Database:
