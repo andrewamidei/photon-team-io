@@ -34,8 +34,9 @@ Install CustomTkinter, Pillow and psycopg2.
 - CustomTkinter is for the UI.
 - Pillow is used for images.
 - Psycopg2 is used or database access.
+- Playsound used for playing in game music.
 ```
-pip install customtkinter pillow psycopg2-binary
+pip install customtkinter pillow psycopg2-binary playsound
 ```
 
 Install the following database dependency in the **_project folder_**:
