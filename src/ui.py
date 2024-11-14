@@ -193,13 +193,13 @@ class PhotonGUI():
 
         row = 0 # to keep track of what row we are on
 
-        # Red team title
-        self.textbox = ctk.CTkLabel(window, text="Red Team", fg_color="transparent")
-        self.textbox.grid(row=row, column=1, padx=ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
+         # Red team title
+        self.textbox = ctk.CTkLabel(window, text="Red Team", fg_color="dark red", text_color = "white")
+        self.textbox.grid(row=row, column=0, columnspan = 3, padx=ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
 
         # Green Team title
-        self.textbox = ctk.CTkLabel(window, text="Green Team", fg_color="transparent")
-        self.textbox.grid(row=row, column=4, padx=ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
+        self.textbox = ctk.CTkLabel(window, text="Green Team", fg_color="dark green", text_color = "white")
+        self.textbox.grid(row=row, column=3, columnspan = 3, padx=ROW_PADDING, pady=COLUMN_PADDING, sticky="ew")
         row += 1 # go to next row
 
         # Red team codename and score titles
