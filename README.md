@@ -30,7 +30,7 @@ Install Tkinter.
 sudo apt-get install python3-tk
 ```
 
-Install CustomTkinter, Pillow and psycopg2.
+Install CustomTkinter, Pillow, psycopg2, and playsound.
 - CustomTkinter is for the UI.
 - Pillow is used for images.
 - Psycopg2 is used or database access.
