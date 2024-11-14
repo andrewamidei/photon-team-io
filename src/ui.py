@@ -173,7 +173,7 @@ class PhotonGUI():
         background_image = create_image(window, "Images/background.tif", width, height, 0, 0)
         window.update() # Updates window
 
-        for x in range(5, -1, -1):
+        for x in range(30, -1, -1):
             image = create_image(window, "Images/" + str(x) + ".tif", 246, 111, 171, 204)
             window.update() # Updates window
 
