@@ -14,7 +14,7 @@
 - [Run your Python Code on vm](#run-python-code-on-vm)
 - [Database Instructions](#connect-database-to-python-file)
 
-If you are looking to setup other parts of the VM check out [Developer Environment Setup](https://github.com/andrewamidei/photon-team-io/blob/main/dev-environment-setup.md).
+If you are looking to setup other parts of the VM check out [Developer Environment Setup]([https://github.com/andrewamidei/photon-team-io/blob/main/dev-environment-setup.md](https://github.com/andrewamidei/photon-team-io/blob/main/dev-environment-setup.md)).
 
 ---
 
@@ -60,3 +60,8 @@ python3 main.py
 ```
 
 ---
+
+## Connect Database to Python file:
+Use the following line to give the postgre user (used to manipulate database) access to the shared folder:
+
+    "sudo usermod -aG vboxsf postgres"
