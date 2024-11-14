@@ -109,11 +109,11 @@ class PhotonGUI():
         row += 1 # go to next row
 
         self.instructions = ctk.CTkLabel(window, text="Click the button or press 'F5' when you are ready to start the game")
-        self.instructions.grid(row=row, column=0, columnspan=TOTAL_SPAN, padx=BUTTON_PADDING, pady=BUTTON_PADDING, sticky="ew")
+        self.instructions.grid(row=row, column=0, columnspan=TOTAL_SPAN, padx=BUTTON_PADDING, pady=4, sticky="ew")
         row += 1 # go to next row
 
         self.instructions = ctk.CTkLabel(window, text="Press 'F12' To clear Player entries")
-        self.instructions.grid(row=row, column=0, columnspan=TOTAL_SPAN, padx=BUTTON_PADDING, pady=BUTTON_PADDING, sticky="ew")
+        self.instructions.grid(row=row, column=0, columnspan=TOTAL_SPAN, padx=BUTTON_PADDING, pady=4, sticky="ew")
         row += 1 # go to next row
 
         # Start Button
