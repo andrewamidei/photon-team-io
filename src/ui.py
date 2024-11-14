@@ -260,7 +260,17 @@ class PhotonGUI():
         console.insert("0.0", "Active!")
         row += 1 # go to next row
 
-        ctk.CTkLabel(window ,text="Time Remaining: 0:00").grid(row=row, column=4 , columnspan=2, padx=5, pady=0, sticky="ew")
+        time_in_seconds = 360
+
+        for game_time in range(time_in_seconds, -1, -1):
+            ctk.CTkLabel(window ,text=f"Time Remaining: {str(int(game_time/60)):0>2}:{str(game_time % 60):0>2}").grid(row=row, column=4 , columnspan=2, padx=5, pady=0, sticky="ew")
+            # print(f"Time Remaining: {str(int(game_time/60)):0>2}:{str(game_time % 60):0>2}")
+            window.update() # Updates window
+
+            time.sleep(1)
+
+        # Exit Button
+        ctk.CTkButton(window, text="Finish", command=lambda: window.destroy(), fg_color="green", hover_color = "dark green").grid(row=row, column=0 , columnspan=2, padx=5, pady=0, sticky="ew")
 
     def transmit_equipment_codes(self, team, player_id, codename): # Should this be in a udp file?
         message = f"Team: {team}, ID: {player_id}, Codename: {codename}"
@@ -269,6 +279,7 @@ class PhotonGUI():
             print(f"Server response: {response}")
         else :
             print("Failed to transmit equipment.")
+
 
     def clear_entries(self) : # TODO: Add comments here so other know what this is doing
         for entry in self.id_entry_red:
