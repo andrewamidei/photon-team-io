@@ -30,27 +30,27 @@ def insertPlayer(player_id, codename, team, max_players):
 
 def refreshDatabase(app, max_players):
     # INSERT RED PLAYERS INTO DATABASE
-    # print("\nRED TEAM INFORMATION:")
-    # print("-----------------------")
+    print("\nRED TEAM INFORMATION:")
+    print("-----------------------")
     for player in range(max_players):
         player_id = app.id_entry_red[player].get()
         codename = app.codename_entry_red[player].get()
         insertPlayer(player_id, codename, "red", max_players)
         hardware_id = app.hardware_id_entry_red[player].get()
-        # if player_id and codename and hardware_id:
-        #     print(f"ID: {player_id}, Codename: {codename}, Hardware ID: {hardware_id}")
+        if player_id and codename and hardware_id:
+            print(f"ID: {player_id}, Codename: {codename}, Hardware ID: {hardware_id}")
 
 
     # INSERT GREEN PLAYERS INTO DATABASE
-    # print("\nGREEN TEAM INFORMATION:")
-    # print("-------------------------")
+    print("\nGREEN TEAM INFORMATION:")
+    print("-------------------------")
     for player in range(max_players):
         player_id = app.id_entry_green[player].get()
         codename = app.codename_entry_green[player].get()
         insertPlayer(player_id, codename, "green", max_players)
         hardware_id = app.hardware_id_entry_green[player].get()
-        # if player_id and codename and hardware_id:
-        #     print(f"ID: {player_id}, Codename: {codename}, Hardware ID: {hardware_id}")
+        if player_id and codename and hardware_id:
+            print(f"ID: {player_id}, Codename: {codename}, Hardware ID: {hardware_id}")
 
 
     # for player in range(max_players):
@@ -74,4 +74,4 @@ def refreshDatabase(app, max_players):
 
     # Closes PostgreSQL Connection
     connection.commit()
-    connection.close()
+    # connection.close()
