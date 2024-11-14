@@ -8,6 +8,8 @@ tag.
 '''
 
 import customtkinter as ctk
+from playsound import playsound
+import random
 from PIL import Image
 import time
 
@@ -170,10 +172,12 @@ class PhotonGUI():
 
         center_window(window) # center the window
 
+        play_track()
+
         background_image = create_image(window, "Images/background.tif", width, height, 0, 0)
         window.update() # Updates window
 
-        for x in range(30, -1, -1):
+        for x in range(13, -1, -1):
             image = create_image(window, "Images/" + str(x) + ".tif", 246, 111, 171, 204)
             window.update() # Updates window
 
@@ -326,3 +330,8 @@ def center_window(window):
     y = (screen_height - height) // 2
 
     window.geometry(f"{width}x{height}+{x}+{y}")
+
+def play_track():
+        random.seed(157836961)
+        track_num = random.randrange(1, 8, 1)
+        playsound("tracks/Track0" + str(track_num) + ".mp3", False)
