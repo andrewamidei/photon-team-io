@@ -66,6 +66,7 @@ class PhotonGUI():
     def __init__(self, window, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+        self.game_stop = False
         # Creates splash screen that lasts the duration of the loading time
         logo_image = create_image(window, SPLASH_SCREEN_LOCATION, window.winfo_width(), window.winfo_height(), 0, 0) # Create the splash screen
         window.update() # Updates window
@@ -286,6 +287,8 @@ class PhotonGUI():
             # print(f"Time Remaining: {str(int(game_time/60)):0>2}:{str(game_time % 60):0>2}")
             window.update() # Updates window
             time.sleep(1)
+        
+        self.game_stop = True
         # Exit Button
         ctk.CTkButton(window, text="Finish", command=lambda: window.destroy(), fg_color="green", hover_color = "dark green").grid(row=row, column=0 , columnspan=2, padx=5, pady=0, sticky="ew")
 
@@ -300,6 +303,8 @@ class PhotonGUI():
             print("Failed to send game start signal.")
 
     def listen_for_game_messages(self):
+        if self.game_stop:
+            return
         try:
             # Check the message queue for new messages
             while not udp_server.message_queue.empty():
