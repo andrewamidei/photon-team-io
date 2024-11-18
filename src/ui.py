@@ -85,6 +85,11 @@ class PhotonGUI():
         self.total_score_red = 0
         self.total_score_green = 0
 
+        self.flash_team = None
+        self.flashing_color_red = False
+        self.flashing_color_green = False
+
+
 
         self.create_entry_terminal(window)
 
@@ -304,6 +309,12 @@ class PhotonGUI():
             time.sleep(1)
         
         self.game_stop = True
+        
+        # Broadcast game end signal
+        end_signal = "221"
+        for i in range(2):
+            send_udp_message(end_signal, server_address=('127.0.0.1', 7500))
+
         # Exit Button
         ctk.CTkButton(window, text="Finish", command=lambda: window.destroy(), fg_color="green", hover_color = "dark green").grid(row=row, column=0 , columnspan=2, padx=5, pady=0, sticky="ew")
 
@@ -332,6 +343,50 @@ class PhotonGUI():
         # Schedule the next check in 100 milliseconds
         self.console.after(100, self.listen_for_game_messages)
 
+    def flash_team_score(self):
+
+        dark_yellow = "#FFEA00"
+
+        # Flashing effect for Red Team
+        if self.flashing_color_red:
+            if self.total_score_label_red.cget("fg_color") == "dark red":
+                self.total_score_label_red.configure(fg_color=dark_yellow)
+            else:
+                self.total_score_label_red.configure(fg_color="dark red")
+            # Schedule the next flash
+            self.total_score_label_red.after(500, self.flash_team_score)
+
+        # Flashing effect for Green Team
+        elif self.flashing_color_green:
+            if self.total_score_label_green.cget("fg_color") == "dark green":
+                self.total_score_label_green.configure(fg_color=dark_yellow)
+            else:
+                self.total_score_label_green.configure(fg_color="dark green")
+            # Schedule the next flash
+            self.total_score_label_green.after(1000, self.flash_team_score)
+
+
+    def update_flashing_team_score(self):
+        # Determine which team has the higher score
+        if self.total_score_red > self.total_score_green:
+            self.flash_team = "red"
+            self.flashing_color_red = True
+            self.flashing_color_green = False
+        elif self.total_score_green > self.total_score_red:
+            self.flash_team = "green"
+            self.flashing_color_green = True
+            self.flashing_color_red = False
+        else:
+            # Reset to default colors if the scores are tied
+            self.total_score_label_red.configure(fg_color="dark red")
+            self.total_score_label_green.configure(fg_color="dark green")
+            self.flashing_color_red = False
+            self.flashing_color_green = False
+            return
+
+        # Start flashing
+        self.flash_team_score()
+
 
 
     def process_game_message(self, message):
@@ -343,14 +398,45 @@ class PhotonGUI():
         shooter_hardware_id, target_hardware_id = message.split(":")
         shooter_codename, target_codename = "", ""
 
-        # Update scores for red team
+        # Determine the score based on the message
+        if "43" in message or "53" in message:
+            score = 100
+        else:
+            score = 10
+
+        # Check for same-team tagging
         for player in range(MAX_PLAYERS):
+            # Check if shooter is on Red Team
+            if self.hardware_id_entry_red[player].get() == shooter_hardware_id:
+                shooter_codename = self.codename_entry_red[player].get()
 
-            if "43" in message or "53" in message:
-                score = 1000
-            else:
-                score = 100
+                # Check if target is also on Red Team (same team tag)
+                if self.hardware_id_entry_red[player].get() == target_hardware_id:
+                    # Deduct points for same-team tag and transmit the shooter's own equipment ID
+                    self.player_score_red[player] -= 10
+                    self.score_labels_red[player].configure(text=str(self.player_score_red[player]))
+                    self.transmit_hit_id(shooter_hardware_id)
+                    self.console.insert("end", f"{shooter_codename} tagged a teammate! -10 points\n")
+                    self.console.see("end")
+                    return  # Exit after handling same-team tag
 
+            # Check if shooter is on Green Team
+            if self.hardware_id_entry_green[player].get() == shooter_hardware_id:
+                shooter_codename = self.codename_entry_green[player].get()
+
+                # Check if target is also on Green Team (same team tag)
+                if self.hardware_id_entry_green[player].get() == target_hardware_id:
+                    # Deduct points for same-team tag and transmit the shooter's own equipment ID
+                    self.player_score_green[player] -= 10
+                    self.score_labels_green[player].configure(text=str(self.player_score_green[player]))
+                    self.transmit_hit_id(shooter_hardware_id)
+                    self.console.insert("end", f"{shooter_codename} tagged a teammate! -10 points\n")
+                    self.console.see("end")
+                    return  # Exit after handling same-team tag
+
+        # Regular scoring logic if not a same-team tag
+        for player in range(MAX_PLAYERS):
+            # Update Red Team player score
             if self.hardware_id_entry_red[player].get() == shooter_hardware_id:
                 self.player_score_red[player] += score
                 self.score_labels_red[player].configure(text=str(self.player_score_red[player]))
@@ -359,13 +445,11 @@ class PhotonGUI():
                 self.total_score_red += score
                 self.total_score_label_red.configure(text=f"Red Team Total Score: {self.total_score_red}")
 
-                shooter_codename = self.codename_entry_red[player].get()
                 # Check for base hit
                 if "43" in message:
                     self.base_hit_labels_red[player].configure(text="🅱️")
-                
 
-
+            # Update Green Team player score
             if self.hardware_id_entry_green[player].get() == shooter_hardware_id:
                 self.player_score_green[player] += score
                 self.score_labels_green[player].configure(text=str(self.player_score_green[player]))
@@ -374,20 +458,41 @@ class PhotonGUI():
                 self.total_score_green += score
                 self.total_score_label_green.configure(text=f"Green Team Total Score: {self.total_score_green}")
 
-                shooter_codename = self.codename_entry_green[player].get()
                 # Check for base hit
                 if "53" in message:
                     self.base_hit_labels_green[player].configure(text="🅱️")
-                
+
+            # Identify the target codename (if applicable)
             if self.hardware_id_entry_red[player].get() == target_hardware_id:
                 target_codename = self.codename_entry_red[player].get()
 
             if self.hardware_id_entry_green[player].get() == target_hardware_id:
                 target_codename = self.codename_entry_green[player].get()
 
+        # Sort and update Red Team UI
+        red_team_data = sorted(
+            zip(self.player_score_red, self.codename_labels_red, self.score_labels_red, self.base_hit_labels_red),
+            key=lambda x: x[0], reverse=True
+        )
+        for row, (score, codename_label, score_label, base_hit_label) in enumerate(red_team_data):
+            base_hit_label.grid(row=row + 2, column=0)
+            codename_label.grid(row=row + 2, column=1)
+            score_label.grid(row=row + 2, column=2)
+
+        # Sort and update Green Team UI
+        green_team_data = sorted(
+            zip(self.player_score_green, self.codename_labels_green, self.score_labels_green, self.base_hit_labels_green),
+            key=lambda x: x[0], reverse=True
+        )
+        for row, (score, codename_label, score_label, base_hit_label) in enumerate(green_team_data):
+            base_hit_label.grid(row=row + 2, column=3)
+            codename_label.grid(row=row + 2, column=4)
+            score_label.grid(row=row + 2, column=5)
+
+        # Construct shot message and display in console
         if shooter_codename and target_codename:
             shot_message = f"{shooter_codename} shot {target_codename}\n"
-            print(shot_message)  # Debugging output
+            print(shot_message)
             self.console.insert("end", shot_message)
             self.console.see("end")
         elif shooter_codename and "43" in message:
@@ -400,6 +505,10 @@ class PhotonGUI():
             print(shot_message)
             self.console.insert("end", shot_message)
             self.console.see("end")
+
+        self.update_flashing_team_score()
+
+
 
     # Function to clear all entries
     def clear_entries(self) : 
