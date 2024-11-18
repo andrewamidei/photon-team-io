@@ -12,8 +12,7 @@
 ### Table of Contents:
 - [Installing Dependencies on vm](#install-dependencies-on-vm)
 - [Run your Python Code on vm](#run-python-code-on-vm)
-- [Database Instructions](#connect-database-to-python-file)
-
+  
 If you are looking to setup other parts of the VM check out [Developer Environment Setup](https://github.com/andrewamidei/photon-team-io/blob/main/dev-environment-setup.md).
 
 ---
@@ -33,16 +32,10 @@ sudo apt-get install python3-tk
 Install CustomTkinter, Pillow, psycopg2, and playsound.
 - CustomTkinter is for the UI.
 - Pillow is used for images.
-- Psycopg2 is used or database access.
-- Playsound used for playing in game music.
+- Psycopg2 is used for database access.
+- Playsound is used for playing in-game music.
 ```
 pip install customtkinter pillow psycopg2-binary playsound
-```
-
-Install the following database dependency in the **_project folder_**:
-
-```
-pip install psycopg2-binary
 ```
 
 ---
@@ -53,16 +46,16 @@ Navigate to the folder location where you have placed your Python code. (look in
 
 
 
-Right click in the folder and select `Open Terminal Here`.
+Right-click in the folder and select `Open Terminal Here`.
 
 Run your code by starting the main file.
 ```
 python3 main.py
 ```
 
----
+Navigate back to the folder location with the source code and open a new terminal by again right-clicking and selecting `Open Terminal Here`.
 
-## Connect Database to Python file:
-Use the following line to give the postgre user (used to manipulate database) access to the shared folder:
-
-    "sudo usermod -aG vboxsf postgres"
+Run the traffic generator by executing the following:
+```
+python3 python_trafficgenarator_v2.py
+```
