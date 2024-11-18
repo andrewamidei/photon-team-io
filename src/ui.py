@@ -81,6 +81,11 @@ class PhotonGUI():
         self.codename_entry_green = ['null'] * MAX_PLAYERS
         self.hardware_id_entry_green = ['null'] * MAX_PLAYERS
 
+        # Team total scores
+        self.total_score_red = 0
+        self.total_score_green = 0
+
+
         self.create_entry_terminal(window)
 
         logo_image.destroy()  # Delete the splash screen when ui is finished loading
@@ -272,6 +277,16 @@ class PhotonGUI():
 
             row += 1
 
+
+        row += 1
+        self.total_score_label_red = ctk.CTkLabel(window, text="Red Team Total Score: 0", fg_color="dark red", text_color="white")
+        self.total_score_label_red.grid(row=row, column=0, columnspan=3, padx=5, pady=5, sticky="ew")
+
+        self.total_score_label_green = ctk.CTkLabel(window, text="Green Team Total Score: 0", fg_color="dark green", text_color="white")
+        self.total_score_label_green.grid(row=row, column=3, columnspan=3, padx=5, pady=5, sticky="ew")
+
+        row += 1
+
         self.console = ctk.CTkTextbox(window)
         self.console.grid(row=row, column=0, columnspan=6, padx=BUTTON_PADDING, pady=BUTTON_PADDING, sticky="ew")
         self.console.insert("end", "GAME START!\n")
@@ -339,15 +354,26 @@ class PhotonGUI():
             if self.hardware_id_entry_red[player].get() == shooter_hardware_id:
                 self.player_score_red[player] += score
                 self.score_labels_red[player].configure(text=str(self.player_score_red[player]))
+
+                # Update total score for Red Team
+                self.total_score_red += score
+                self.total_score_label_red.configure(text=f"Red Team Total Score: {self.total_score_red}")
+
                 shooter_codename = self.codename_entry_red[player].get()
                 # Check for base hit
                 if "43" in message:
                     self.base_hit_labels_red[player].configure(text="🅱️")
+                
 
 
             if self.hardware_id_entry_green[player].get() == shooter_hardware_id:
                 self.player_score_green[player] += score
                 self.score_labels_green[player].configure(text=str(self.player_score_green[player]))
+
+                # Update total score for Green Team
+                self.total_score_green += score
+                self.total_score_label_green.configure(text=f"Green Team Total Score: {self.total_score_green}")
+
                 shooter_codename = self.codename_entry_green[player].get()
                 # Check for base hit
                 if "53" in message:
