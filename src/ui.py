@@ -375,33 +375,25 @@ class PhotonGUI():
             self.console.insert("end", shot_message)
             self.console.see("end")
 
-
-    def transmit_equipment_codes(self, team, player_id, codename): # Should this be in a udp file?
-        message = f"Team: {team}, ID: {player_id}, Codename: {codename}"
-        response = send_udp_message(message)
-        if response:
-            print(f"Server response: {response}")
-        else :
-            print("Failed to transmit equipment.")
-
-    def clear_entries(self) : # TODO: Add comments here so other know what this is doing
-        for entry in self.id_entry_red:
+    # Function to clear all entries
+    def clear_entries(self) : 
+        for entry in self.id_entry_red: # Clear all red team entries
+            if isinstance(entry, ctk.CTkEntry): # if the entry is a ctk entry, delete the id entry
+                entry.delete(0, ctk.END) # delete the entry
+        for entry in self.codename_entry_red: # if the entry is a ctk entry, delete the codename entry
             if isinstance(entry, ctk.CTkEntry):
-                entry.delete(0, ctk.END)
-        for entry in self.codename_entry_red:
-            if isinstance(entry, ctk.CTkEntry):
-                entry.delete(0, ctk.END)
-        for entry in self.hardware_id_entry_red:
+                entry.delete(0, ctk.END) # delete the entry by setting it to zero
+        for entry in self.hardware_id_entry_red: # if the entry is a ctk entry, delete the hardware id entry
             if isinstance(entry, ctk.CTkEntry):
                 entry.delete(0, ctk.END)
 
-        for entry in self.id_entry_green:
+        for entry in self.id_entry_green: # Clear all green team entries
+            if isinstance(entry, ctk.CTkEntry): # if the entry is a ctk entry, delete the id entry
+                entry.delete(0, ctk.END) # delete the entry
+        for entry in self.codename_entry_green: # if the entry is a ctk entry, delete the codename entry
             if isinstance(entry, ctk.CTkEntry):
-                entry.delete(0, ctk.END)
-        for entry in self.codename_entry_green:
-            if isinstance(entry, ctk.CTkEntry):
-                entry.delete(0, ctk.END)
-        for entry in self.hardware_id_entry_green:
+                entry.delete(0, ctk.END) # delete the entry by setting it to zero
+        for entry in self.hardware_id_entry_green: # if the entry is a ctk entry, delete the hardware id entry
             if isinstance(entry, ctk.CTkEntry):
                 entry.delete(0, ctk.END)
                 
